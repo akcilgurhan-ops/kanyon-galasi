@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kanyon Malikânesi Mobil Karakter Portalı</title>
-    <!-- Google Fonts: Retro Esintili Fontlar -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -15,185 +14,146 @@
             --text-color: #e5dec9;
             --border-color: #2c2a23;
         }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             -webkit-tap-highlight-color: transparent;
         }
-
         body {
             background-color: var(--dark-bg);
             color: var(--text-color);
             font-family: 'Courier Prime', monospace;
-            line-height: 1.5;
+            line-height: 1.45;
             padding: 10px;
             display: flex;
             justify-content: center;
         }
-
-        /* Mobil Cihaz Kapsayıcısı */
         .mobile-container {
             width: 100%;
             max-width: 480px;
             background: var(--paper-bg);
             border: 2px solid var(--vintage-gold);
-            padding: 15px;
+            padding: 14px;
             border-radius: 4px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.8);
-            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.85);
         }
-
-        /* Header Tasarımı (1940s Gazete/Film Noir Tarzı) */
         .portal-header {
             text-align: center;
             border-bottom: 3px double var(--vintage-gold);
-            padding-bottom: 10px;
-            margin-bottom: 15px;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
         }
-
         .portal-header h1 {
             font-family: 'Cinzel', serif;
-            font-size: 16pt;
+            font-size: 15pt;
             color: var(--vintage-gold);
             letter-spacing: 1px;
             text-transform: uppercase;
         }
-
         .portal-header .subtitle {
-            font-size: 8pt;
+            font-size: 7.5pt;
             letter-spacing: 0.5px;
             text-transform: uppercase;
             color: #888;
         }
-
-        /* Karakter Künyesi */
         .character-card {
             border: 1px solid var(--border-color);
             background: #161616;
-            padding: 12px;
-            margin-bottom: 15px;
+            padding: 10px;
+            margin-bottom: 12px;
             text-align: center;
-            position: relative;
         }
-
         .character-name {
             font-family: 'Playfair Display', serif;
-            font-size: 14pt;
+            font-size: 13pt;
             font-weight: bold;
             color: #fff;
             text-transform: uppercase;
         }
-
         .character-title {
             color: var(--vintage-gold);
-            font-size: 9pt;
+            font-size: 8.5pt;
             text-transform: uppercase;
-            margin-bottom: 8px;
+            margin-top: 2px;
         }
-
-        /* Sekme / Tab Menüsü */
         .tabs {
             display: flex;
             border: 1px solid var(--vintage-gold);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             border-radius: 3px;
             overflow: hidden;
         }
-
         .tab-btn {
             flex: 1;
             background: #1a1a1a;
             border: none;
             color: #888;
-            padding: 10px 5px;
+            padding: 9px 4px;
             font-family: 'Cinzel', serif;
-            font-size: 8pt;
+            font-size: 7.5pt;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             text-transform: uppercase;
         }
-
         .tab-btn.active {
             background: var(--vintage-gold);
             color: #000;
             font-weight: bold;
         }
-
         .tab-btn:not(:last-child) {
             border-right: 1px solid var(--vintage-gold);
         }
-
-        /* Sekme İçerikleri */
         .tab-content {
             display: none;
         }
-
         .tab-content.active {
             display: block;
         }
-
-        /* Tipografi / İçerik Detayları */
         h2 {
             font-family: 'Cinzel', serif;
-            font-size: 10.5pt;
+            font-size: 9.5pt;
             color: var(--vintage-gold);
-            margin-top: 15px;
-            margin-bottom: 6px;
+            margin-top: 12px;
+            margin-bottom: 5px;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 2px;
             text-transform: uppercase;
         }
-
         p, ul {
-            font-size: 8.5pt;
-            margin-bottom: 10px;
+            font-size: 8.2pt;
+            margin-bottom: 8px;
             text-align: justify;
             color: #d1caa7;
         }
-
         ul {
-            padding-left: 15px;
+            padding-left: 14px;
         }
-
         li {
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
-
-        .bold-term {
-            color: #fff;
-            font-weight: bold;
-        }
-
-        /* Raund Kutusu */
         .round-box {
             background: #161616;
             border-left: 3px solid var(--vintage-gold);
-            padding: 10px;
-            margin-bottom: 12px;
+            padding: 8px 10px;
+            margin-bottom: 10px;
         }
-
         .round-title {
             font-weight: bold;
-            font-size: 9pt;
+            font-size: 8.5pt;
             color: var(--vintage-gold);
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             text-transform: uppercase;
         }
-
-        /* Gizli Bilgi & Spoiler Kalkanı */
         .spoiler-container {
             position: relative;
             background: #0f0f0f;
             border: 1.5px dashed #b31b1b;
-            padding: 15px;
+            padding: 12px;
             text-align: center;
             border-radius: 4px;
-            overflow: hidden;
-            margin-top: 10px;
+            margin-top: 8px;
         }
-
         .spoiler-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -202,57 +162,47 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 10px;
+            padding: 12px;
             z-index: 10;
         }
-
         .spoiler-overlay p {
             color: #b31b1b;
             font-weight: bold;
-            font-size: 9pt;
-            margin-bottom: 10px;
+            font-size: 8.5pt;
+            margin-bottom: 8px;
             text-align: center;
         }
-
         .reveal-btn {
             background: #b31b1b;
             color: #fff;
             border: none;
-            padding: 8px 15px;
+            padding: 7px 14px;
             font-family: 'Cinzel', serif;
-            font-size: 8.5pt;
+            font-size: 8pt;
             cursor: pointer;
             border-radius: 3px;
             text-transform: uppercase;
         }
-
-        .reveal-btn:active {
-            background: #e62e2e;
-        }
-
         .secret-content {
             filter: blur(5px);
             user-select: none;
             pointer-events: none;
             transition: filter 0.3s;
         }
-
         .secret-content.revealed {
             filter: none;
             user-select: text;
             pointer-events: auto;
         }
-
-        /* Hata Ekranı */
         #error-screen {
             text-align: center;
-            padding: 40px 10px;
+            padding: 30px 10px;
         }
-
         #error-screen h2 {
             color: #b31b1b;
             border: none;
-            font-size: 14pt;
+            font-size: 13pt;
+            margin-bottom: 8px;
         }
     </style>
 </head>
@@ -270,61 +220,51 @@
             <div class="character-title" id="char-title">Lütfen Bekleyin</div>
         </div>
 
-        <!-- Sekmeler -->
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('tab-bio')">KİMLİK</button>
             <button class="tab-btn" onclick="switchTab('tab-rounds')">REPLİKLER</button>
             <button class="tab-btn" onclick="switchTab('tab-secrets')">AJANDA & SIRLAR</button>
         </div>
 
-        <!-- TAB 1: KİMLİK & BIO -->
+        <!-- TAB 1: KİMLİK -->
         <div id="tab-bio" class="tab-content active">
             <h2>KİMLİĞİNİZ & TARZINIZ</h2>
-            <p id="char-bio">Bio verileri yükleniyor...</p>
+            <p id="char-bio"></p>
             
             <h2>HERKESİN BİLDİĞİ GERÇEKLER</h2>
-            <ul id="char-facts">
-                <!-- Javascript ile doldurulacak -->
-            </ul>
+            <ul id="char-facts"></ul>
         </div>
 
-        <!-- TAB 2: RAUNDLAR & REPLİKLER -->
+        <!-- TAB 2: REPLİKLER -->
         <div id="tab-rounds" class="tab-content">
-            <p style="font-style: italic; color: #888; margin-bottom: 12px; text-align: center;">
-                Sıranız geldiğinde veya moderatör turu başlattığında bunları sesli okuyun ya da konuşmanıza katın:
+            <p style="font-style: italic; color: #888; margin-bottom: 10px; text-align: center; font-size: 7.5pt;">
+                Moderatör sıranızı verdiğinde bu metinleri konuşmanıza katın veya sesli okuyun:
             </p>
-            <div id="rounds-container">
-                <!-- Javascript ile raundlar yüklenecek -->
-            </div>
+            <div id="rounds-container"></div>
         </div>
 
-        <!-- TAB 3: GİZLİ AJANDA & SIRLAR (SPOILER KALKANLI) -->
+        <!-- TAB 3: GİZLİ AJANDA -->
         <div id="tab-secrets" class="tab-content">
             <div class="spoiler-container">
                 <div class="spoiler-overlay" id="spoiler-overlay">
-                    <p>DUR!<br>BU BÖLÜM SADECE BU ROLÜ OYNAYAN KİŞİYE ÖZELDİR. SAKIN BAŞKALARINA GÖSTERMEYİN!</p>
+                    <p>DUR!<br>BU BÖLÜM SADECE BU ROLÜ OYNAYAN KİŞİYE ÖZELDİR. KİMSEYE GÖSTERMEYİN!</p>
                     <button class="reveal-btn" onclick="revealSecrets()">SIRLARI GÖSTER</button>
                 </div>
                 <div class="secret-content" id="secret-content">
                     <h2>GİZLİ GÜNAHLARINIZ</h2>
-                    <p id="char-sins">Sırlar yükleniyor...</p>
+                    <p id="char-sins"></p>
                     
                     <h2>ŞAHSİ HEDEFLERİNİZ</h2>
-                    <p style="font-size: 7.8pt; color: var(--vintage-gold); font-style: italic; margin-bottom: 8px;">
-                        Oyun boyunca çaktırmadan bu hedeflere ulaşmaya çalışın:
-                    </p>
-                    <ul id="char-goals">
-                        <!-- Javascript ile hedefler yüklenecek -->
-                    </ul>
+                    <ul id="char-goals"></ul>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Hata Bildirimi (URL'de karakter bulunamadığında) -->
+    <!-- Hata Bildirimi -->
     <div id="error-screen" style="display: none;">
         <h2>Karakter Bulunamadı</h2>
-        <p>Lütfen QR kodunu tekrar okutun veya ev sahibinin size verdiği bağlantıyı kontrol edin.</p>
+        <p style="text-align: center;">Lütfen QR kodunu tekrar okutun veya masa kartınızdaki karakter numarasını bağlantının sonuna ekleyin (Örn: ?char=1).</p>
     </div>
 </div>
 
@@ -333,11 +273,11 @@
         "1": {
             name: "Whitcomb O'Brien",
             title: "Güvenlik Şefi & Özel Dedektif",
-            bio: "Eski LAPD cinayet masası dedektifisiniz. Kessler sizi partinin güvenliğini sağlamak için tuttu; ancak şerif gelene kadar bu cinayeti çözmek zorundasınız.",
+            bio: "Eski LAPD cinayet masası dedektifisiniz. Kessler sizi galanın güvenliğini sağlamak için tuttu; ancak fırtına ve yangın yüzünden şerif gelene kadar bu cinayeti siz yönetmek zorundasınız.",
             facts: [
                 "Olay yeri tutanaklarını ve şüpheli ifadelerini siz topluyorsunuz.",
                 "Eski polis refleksiyle herkesi sorgulama yetkisine sahipsiniz.",
-                "Cinayet anında nizamiyede güvenliği kontrol ettiğinizi iddia ediyorsunuz."
+                "Cinayet anında nizamiyede barikatları kontrol ettiğinizi iddia ediyorsunuz."
             ],
             rounds: [
                 { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Kapılar kilitlendi ve yangın yolu kesti. Saat 22:15 ile 22:30 arasında ana kapı nizamiyesindeydim. Silah sesiyle içeri koştum. Şerif gelene kadar kimse buradan ayrılamaz!" },
@@ -346,7 +286,7 @@
                 { num: 4, title: "TUR 4: YÜZLEŞME", text: "Telsizim 22:22'de misafir katında cızırdadı, uşak beni duydu. Kütüphaneye inen servis merdiveninde değildim!" }
             ],
             sins: "Kessler'ın emriyle misafirlerin odalarını gizlice aradınız. Telsizinizin 2. katta cızırdaması dedektiflik kimliğinizi zedeleyebilir.",
-            goals: ["Masadaki ipuçlarını tarafsızca birleştirip gerçek faili ortaya çıkarmak.", "Odalarda arama yaptığınız için cinayetle suçlanmamak."]
+            goals: ["Masadaki ipuçlarını tarafsızca birleştirip gerçek faili ortaya çıkarmak.", "Odalarda yetkisiz arama yaptığınız için cinayetle suçlanmamak."]
         },
         "2": {
             name: "Vivian Vance",
@@ -361,7 +301,7 @@
                 { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "A.J.'in saygısızca duyurusundan sonra migrenim tuttu. Saat 22:15'ten silah sesine kadar batı terasında rüzgarı soludum. A.J.'i salondan ayrıldıktan sonra canlı görmedim." },
                 { num: 2, title: "TUR 2: ŞÜPHELER", text: "Saat 22:20 civarında terastan salona baktığımda hukukçumuz Walt Finch barda yoktu. Barmen yalnızdı, Finch ortalıktan kaybolmuştu!" },
                 { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Saklamanın anlamı yok: 21:55'te kütüphaneye gizlice girdim ve konyak şişesine kusturucu toz döktüm! Amacım onu öldürmek değil, kürsüde rezil olmasını sağlamaktı! Kurşunla vurulmuş!" },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Şöminedeki yanık mektup 3 ay önce New York'ta yazıldı! Üzerindeki kiremit kırmızısı ruja bakın; benim bu gece sürdüğüm ruj vişne çürüğü! O eski bir öfke mektubudur!" }
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Şöminedeki yanık mektup 3 ay önce New York'ta yazıldı! O eski bir öfke mektubudur, cinayet kanıtı değil!" }
             ],
             sins: "Kadehe kusturucu döktünüz ama kadeh devrildi ve kurban içmedi. Şöminedeki tehdit mektubu 3 ay öncesine aittir.",
             goals: ["Kadehe döktüğünüz ilacın cinayetle ilgisi olmadığını kanıtlamak.", "Gerçek katili bulup mirastan payınızı korumak."]
@@ -395,7 +335,7 @@
             ],
             rounds: [
                 { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Akşam 22:15 ile 22:30 arasında salonda hanımefendilere nane likörü ikram ediyordum. Silah sesini duyar duymaz kütüphaneye koştum ve A.J.'in nabzını kontrol ettim." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Saat 21:50 sularında Vivian'ın kütüphaneden telaşla çıktığını gördüm. Ayrıca kütüphanedeki devrilmiş kadehin rengi hafif bulanıktı." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Saat 21:50 sularında Vivian'ın kütüphaneden telaşla çıktığını gördüm. Ayrıca kütüphanedeki devrilmiş kadehin dibinde beyazımsı bir tortu vardı." },
                 { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "İtiraf ediyorum: Salonda değildim. A.J., oyunculara sağladığım reçetesiz morfin kayıtlarını Kara Defter'e yazmıştı. O defteri geri almak için odaya girdim; kasayı açamayınca panikle garaja kaçtım ve yangın tüpünü devirdim!" },
                 { num: 4, title: "TUR 4: YÜZLEŞME", text: "Morfin ampulünün tamamı kırıldığı yerde halıya dökülmüştür; maktulün vücudunda iğne izi yoktur. Ölüm sebebi göğse giren kurşundur!" }
             ],
@@ -433,7 +373,7 @@
                 { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "A.J. ile bu stüdyoyu sıfırdan kurduk. Saat tam 22:30'da silah sesi geldiğinde salondaki barda Frankie'nin karşısındaydım; kadehime vermut koyuyordu. Duvardaki saat 22:30'u vuruyordu." },
                 { num: 2, title: "TUR 2: ŞÜPHELER", text: "Tommy'nin sahte kimlikle stüdyoya sığındığını biliyorduk. Bir de 22:10 kesintisinde Dr. Hale'in salondan telaşla çıktığını gördüm." },
                 { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "A.J. ile bütçe yüzünden tartıştığımız doğru; ama bir hukukçu kan dökmez, yasalarla hesaplaşır. Barmen Frankie şahidimdir; silah patladığında onun karşısındaydım!" },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Masadaki kanıtlar Hollywood skandallarını gösteriyor. Tommy kaçıyordu, Hale morfin çalıyordu, Margaret ilaç atıyordu. Barmenin ifadesi ortada, suçsuzun ben olduğum açık!" }
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Masadaki kanıtlar Hollywood skandallarını gösteriyor. Tommy kaçıyordu, Hale morfin çalıyordu, Margaret ilaç atıyordu. Barmenin ifadesi ortada, suçsuz olduğum açık!" }
             ],
             sins: "Katil sizsiniz! İsviçre'ye aktardığınız 250.000$ ortaya çıkacaktı. 22:15'te barda Frankie'ye bilerek saati sordunuz (bar saati 15 dk ileriydi, 22:30 dedi). Sonra servis merdiveninden çıktınız ve radyo çanı çalarken (gerçek 22:30'da) tetiği çektiniz. Kol düğmenizi masanın dibine düşürdünüz.",
             goals: ["Frankie'nin 'saat 22:30'da bardaydı' ifadesine sığınarak alibinizi korumak.", "Oylamada çoğunluğun sizin dışınızda birini suçlamasını sağlamak."]
@@ -715,6 +655,5 @@
         }
     }
 </script>
-
 </body>
 </html>
