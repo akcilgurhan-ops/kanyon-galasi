@@ -329,56 +329,327 @@
 </div>
 
 <script>
-    // 21 Karakterlik Veri Bankası (En Kritik Çekirdek 6 Karakter Buradadır. Sınırları aşmamak için diğerleri de kolayca eklenebilir)
     const characters = {
-        "6": {
-            name: "Walt Finch",
-            title: "Stüdyo Hukuk Müşaviri & Kurucu Ortak",
-            bio: "Siz, Hollywood'u ve Titan Pictures'ı perde arkasından yöneten gölgesiniz. A.J. Kessler ile kırk yıldır birliktesiniz; ancak onun kontrolsüz kibri stüdyonun sonunu getirmek üzereydi.",
+        "1": {
+            name: "Whitcomb O'Brien",
+            title: "Güvenlik Şefi & Özel Dedektif",
+            bio: "Eski LAPD cinayet masası dedektifisiniz. Kessler sizi partinin güvenliğini sağlamak için tuttu; ancak şerif gelene kadar bu cinayeti çözmek zorundasınız.",
             facts: [
-                "Ev sahibi dahil herkes sizin stüdyodaki en nüfuzlu ve kanuni otorite olduğunuzu bilir.",
-                "Her zaman soğukkanlı, kruvaze takım elbiseli ve son derece kuralsınız.",
-                "Cinayet gecesi, elektrik kesintisinden hemen önce ve sonra barda içki içtiğiniz bilinmektedir."
+                "Olay yeri tutanaklarını ve şüpheli ifadelerini siz topluyorsunuz.",
+                "Eski polis refleksiyle herkesi sorgulama yetkisine sahipsiniz.",
+                "Cinayet anında nizamiyede güvenliği kontrol ettiğinizi iddia ediyorsunuz."
             ],
             rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR (İlk İfade)", text: "Yüksek sesle okuyun: 'Bayanlar ve baylar, lütfen sükuneti koruyalım. Şerif ve ekipleri yollar açılır açılmaz burada olacaklar. Bu saate kadar kimse köşkten ayrılmamalı. Ben Walt Finch, stüdyonun ve A.J. Kessler'ın kırk yıllık hukuk müşaviriyim. Yasalar çerçevesinde, adalet yerini bulana dek buradaki soruşturmaya tam destek veriyorum.'" },
-                { num: 2, title: "TUR 2: ŞÜPHELER & YANILTMACALAR", text: "Konuşmanıza katın: Kütüphanede bulunan mühürlü morfin ampulleri (K5) ve silah kılıfı (K6) hakkında ne diyeceksiniz? Dr. Hale'in revir kayıtlarındaki yasadışı açıkları ve Rossi'nin kökenini ortaya dökerek hedef şaşırtın." },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Savunma repliği: 'Barmen Frankie (K10) şahidimdir; saat 22:30'da barda viskimi tazeliyordu. Olay anında kütüphaneden millerce uzaktaydım, bu da benim en ufak bir suçumun olamayacağını ispatlar.'" },
-                { num: 4, title: "TUR 4: ZİRVE KANITLARINA YÜZLEŞME", text: "Zaman çizelgesi tartışması: Saatlerin 15 dakika ileri ayarlandığını (K9 & K18) ve radyo haber bülteninin elektrik kesintisinde 22:30'da çaldığını (K8) herkes öğreniyor. Alibinizin sarsılmaması için soğukkanlılığınızı kaybetmeyin." }
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Kapılar kilitlendi ve yangın yolu kesti. Saat 22:15 ile 22:30 arasında ana kapı nizamiyesindeydim. Silah sesiyle içeri koştum. Şerif gelene kadar kimse buradan ayrılamaz!" },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Elektrikler geldiğinde koridorda bir parazit sesi duydum. Ayrıca servis merdiveninin paspası kaymıştı; birisi karanlıkta orayı aceleyle kullanmıştı." },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Kendi kusurumu kayda geçireyim: Nizamiyede yalnız değildim. Kessler bana 5.000$ teklif ederek misafirlerin odalarını aramamı istemişti. Odaları arıyordum ama kütüphaneye girmedim!" },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Telsizim 22:22'de misafir katında cızırdadı, uşak beni duydu. Kütüphaneye inen servis merdiveninde değildim!" }
             ],
-            sins: "Katil sizsiniz! A.J. Kessler, stüdyodan İsviçre bankalarına aktardığınız 250.000 dolarlık zimmeti (K12) tespit etti ve bunu yarın sabah savcılığa verecekti. Onu 22:30'da (radyo çanı çalarken) vurdunuz, kasadaki 'Kara Defter'i aldınız. Şöminede yaktınız sandıkları şey sadece bir kopyaydı. Kol düğmelerinizden birini kütüphanede düşürdünüz (K16).",
-            goals: [
-                "Barmen Frankie'nin sizi 'saat tam 22:30'da' barda gördüğü ifadesini sürekli ön plana çıkarın.",
-                "Şüpheleri yasadışı ilaçlar (K5) üzerinden Dr. Arthur Hale'e ve kütüphanede kılıfı (K6) bulunan Tommy Rossi'ye kaydırın.",
-                "Asla katil olduğunuzu itiraf etmeyin; oylamada herkesin başkasını suçlamasını sağlayın."
-            ]
+            sins: "Kessler'ın emriyle misafirlerin odalarını gizlice aradınız. Telsizinizin 2. katta cızırdaması dedektiflik kimliğinizi zedeleyebilir.",
+            goals: ["Masadaki ipuçlarını tarafsızca birleştirip gerçek faili ortaya çıkarmak.", "Odalarda arama yaptığınız için cinayetle suçlanmamak."]
         },
         "2": {
             name: "Vivian Vance",
             title: "Eski Eş / Sinema Divası",
-            bio: "Titan Pictures'ın sessiz sinemadan kalma, şöhreti sönmekte olan efsanevi divası. Kessler’ın eski eşisiniz ve stüdyodaki gücünüzü geri almak için her şeyi göze alabilirsiniz.",
+            bio: "Titan Pictures'ın sessiz sinemadan kalma efsanevi divası. Kessler’ın eski eşisiniz ve stüdyodan kovulmayı hazmedemiyorsunuz.",
             facts: [
-                "A.J. Kessler'ın eski karısısınız; stüdyonun yarısının kendinize ait olduğunu savunursunuz.",
-                "Vişne çürüğü ruju, kürkleri ve kibirli tavırlarıyla meşhurdur.",
-                "Gala boyunca sürekli gergin olduğunuz ve Kessler ile kütüphanede tartıştığınız görülmüştür."
+                "Kessler'ın eski karısısınız; stüdyonun yarısının kendinize ait olduğunu savunursunuz.",
+                "Vişne çürüğü rujunuz, kürkünüz ve kibirli tavırlarınızla tanınırsınız.",
+                "Akşam boyunca terasta hava aldığınızı iddia ediyorsunuz."
             ],
             rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR (İlk İfade)", text: "Yüksek sesle okuyun: 'Ben Vivian Vance. Bu stüdyoyu A.J. ile sıfırdan kurduk; ancak o, genç ve yeteneksiz kadınlarla (Margaret) hayatını ve geleceğimizi mahvetti. Evet, kütüphanede onunla tartıştım çünkü sözleşmelerimi iptal etmekle tehdit ediyordu. Ama ben odadan çıktığımda gayet canlıydı ve içkisini yudumluyordu!'" },
-                { num: 2, title: "TUR 2: ŞÜPHELER & YANILTMACALAR", text: "Şüpheleri dağıtın: Şöminede bulunan yanık mektup (K7) sizin aleyhinize gibi görünse de aslında A.J.'in aylar önce size attığı bir tehdittir. Kütüphanedeki morfinin (K5) ve silahların kendinizle hiçbir alakası olmadığını söyleyin." },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Savunma repliği: 'Elektrikler kesildiğinde ben büyük salonda diğer misafirlerle birlikteydim. Merdivenlerden gelen ayak seslerini ben de duydum ama yukarı çıkan ben değildim. O saatte karanlıkta kimin kütüphaneye sızdığını bence aramızdaki çıkarcılar iyi biliyor!'" },
-                { num: 4, title: "TUR 4: ZİRVE KANITLARINA YÜZLEŞME", text: "Karşı Atak: Walt Finch'in sürekli kurallardan bahsetmesine rağmen A.J.'in tüm gizli işlerini yürüttüğünü, stüdyonun kasasını en iyi onun bildiğini vurgulayın. Altın kol düğmesinin (K16) stüdyonun kurucularına (Finch ve Kessler) özel olduğunu belirtin." }
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "A.J.'in saygısızca duyurusundan sonra migrenim tuttu. Saat 22:15'ten silah sesine kadar batı terasında rüzgarı soludum. A.J.'i salondan ayrıldıktan sonra canlı görmedim." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Saat 22:20 civarında terastan salona baktığımda hukukçumuz Walt Finch barda yoktu. Barmen yalnızdı, Finch ortalıktan kaybolmuştu!" },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Saklamanın anlamı yok: 21:55'te kütüphaneye gizlice girdim ve konyak şişesine kusturucu toz döktüm! Amacım onu öldürmek değil, kürsüde rezil olmasını sağlamaktı! Kurşunla vurulmuş!" },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Şöminedeki yanık mektup 3 ay önce New York'ta yazıldı! Üzerindeki kiremit kırmızısı ruja bakın; benim bu gece sürdüğüm ruj vişne çürüğü! O eski bir öfke mektubudur!" }
             ],
-            sins: "A.J. Kessler'ın sizin hakkınızda komünist sempatizanı iddialarını içeren belgeleri Kara Defter'e koyduğunu biliyordunuz. O defteri geri almak veya en azından onu zehirlemek için barda Kessler'ın kadehline gizlice kusturucu/mide bulandırıcı bir doz eklediniz ama o kadehi hiç içemeden vuruldu.",
-            goals: [
-                "Margaret Kessler'ın genç ve mirasa aç bir kadın olduğunu söyleyerek hedef tahtasına koyun.",
-                "Gecenin zaman çizelgesindeki 15 dakikalık farkı çözmeye çalışarak alibilerin yalan olduğunu kanıtlayın.",
-                "Size yönelik 'şantaj mektubu' (K7) iddialarını kesin bir dille reddedin."
-            ]
+            sins: "Kadehe kusturucu döktünüz ama kadeh devrildi ve kurban içmedi. Şöminedeki tehdit mektubu 3 ay öncesine aittir.",
+            goals: ["Kadehe döktüğünüz ilacın cinayetle ilgisi olmadığını kanıtlamak.", "Gerçek katili bulup mirastan payınızı korumak."]
+        },
+        "3": {
+            name: "Tommy Rossi",
+            title: "Yükselen Başrol Jön",
+            bio: "Stüdyonun genç ve karizmatik yıldızısınız. Ancak geçmişinizde kimsenin bilmemesi gereken büyük bir mafya sırrı gizli.",
+            facts: [
+                "Kessler'ın İtalya'dan keşfettiğini söylediği yeni gözdesiniz.",
+                "Son derece şık giyinir, kadınlara karşı centilmen davranırsınız.",
+                "Cinayet saatinde projeksiyon odasında olduğunuzu söylediniz."
+            ],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Saat 22:10'dan silah sesine kadar alt kattaki projeksiyon odasındaydım. Yeni filmimin montaj kopyasını tek başıma izliyordum." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Saat 22:05 civarında Margaret Kessler'ın kocasının kadehine beyaz bir toz ufaladığını gördüm. Bir katil arıyorsanız genç eşe bakın!" },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Gerçek adım Tommaso Rinaldi. Brooklyn mafyasından kaçıp sahte pasaportla Hollywood'a sığındım. A.J. beni polise satacaktı. 22:25'te bavulla garajdan kaçmaya çalışıyordum. Dublör Nina beni gördü!" },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Merdivendeki deri kılıf benim, evet! Ama o kılıf .45 kalibre askeri kılıf! Kessler'ı öldüren mermi ise .38 kalibre! Silahım arabamdaydı!" }
+            ],
+            sins: "Gerçek kimliğiniz mafya kaçağı Tommaso Rinaldi. Merdivendeki kılıf sizin ama silahınız .45 kalibre; cinayet ise .38 kalibreyle işlendi.",
+            goals: ["Sahte kimliğinizin ortaya çıkıp tutuklanmanızı engellemek.", "Silah kılıfı üzerinden üzerinize atılan suçlamaları çürütmek."]
+        },
+        "4": {
+            name: "Dr. Arthur Hale",
+            title: "Stüdyo Başhekimi",
+            bio: "Titan Pictures'ın 20 yıllık emektar doktorusunuz. Yıldızların ve stüdyo yöneticilerinin tüm özel sırlarını bilirsiniz.",
+            facts: [
+                "Stüdyodaki tüm sağlık ve kaza raporlarını siz tutarsınız.",
+                "Kessler ile uzun yıllara dayanan bir iş ortaklığınız vardır.",
+                "Olay gecesi salonda tansiyon ölçtüğünüzü iddia ettiniz."
+            ],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Akşam 22:15 ile 22:30 arasında salonda hanımefendilere nane likörü ikram ediyordum. Silah sesini duyar duymaz kütüphaneye koştum ve A.J.'in nabzını kontrol ettim." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Saat 21:50 sularında Vivian'ın kütüphaneden telaşla çıktığını gördüm. Ayrıca kütüphanedeki devrilmiş kadehin rengi hafif bulanıktı." },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "İtiraf ediyorum: Salonda değildim. A.J., oyunculara sağladığım reçetesiz morfin kayıtlarını Kara Defter'e yazmıştı. O defteri geri almak için odaya girdim; kasayı açamayınca panikle garaja kaçtım ve yangın tüpünü devirdim!" },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Morfin ampulünün tamamı kırıldığı yerde halıya dökülmüştür; maktulün vücudunda iğne izi yoktur. Ölüm sebebi göğse giren kurşundur!" }
+            ],
+            sins: "Reçetesiz morfin defterini çalmaya çalıştınız; ampulü düşürdünüz ve sıvısı halıya aktı. Zehirleme yapmadınız.",
+            goals: ["Tıbbi diplomanızı iptal ettirecek reçete skandalını örtbas etmek.", "Gerçek katilin bulunmasını sağlamak."]
+        },
+        "5": {
+            name: "Margaret Kessler",
+            title: "Genç Eş / Dul",
+            bio: "Kessler ile 2 yıl önce evlenen genç eşsiniz. Evlilik sözleşmesindeki ağır maddeler yüzünden köşeye sıkışmış durumdasınız.",
+            facts: [
+                "Eski bir koro şarkıcısısınız; Kessler ölürse servetin büyük kısmının varisisiniz.",
+                "Akşam boyunca mutfakta hizmetçilere yardım ettiğinizi belirttiniz.",
+                "Dantelli tül yelpazeniz ve pırlantalarınızla dikkat çekersiniz."
+            ],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Kocamın o korkunç duyurusundan sonra mutfak kilerine indim. 22:15 ile 22:30 arasında erzakı düzenliyordum. Silah patladığında servis asansörünün yanındaydım." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Kasanın kombinasyonunu bu evde kocam dışında bilen tek bir kişi vardı: Stüdyo ortağımız Walt Finch!" },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Mutfakta değildim; kış bahçesinde Tommy Rossi ile buluşmuştum. Yasak ilişkimiz öğrenilirse beni sokağa atardı. Kadehe uyku tozu atmıştım ama kadeh devrildi, tek damla bile içmedi!" },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Devrilen kadehte dudak izi yok, kocam konyağı içmedi. Kocam kurşunla öldürüldü. Ben katil değilim!" }
+            ],
+            sins: "Tommy Rossi ile gizli aşk yaşıyorsunuz. Kadehe uyku tozu attınız ama kadeh devrildi; maktul ilacı içmedi.",
+            goals: ["Yasak ilişkinizin ortaya çıkıp miras hakkınızı yakmasını engellemek.", "Kasa şifresini sadece Finch'in bildiğini masaya kabul ettirmek."]
+        },
+        "6": {
+            name: "Walt Finch",
+            title: "Stüdyo Hukuk Müşaviri & Kurucu Ortak",
+            bio: "Titan Pictures'ın kurucu ortağı ve baş hukukçususunuz. Soğukkanlı, kuralları bilen ve stüdyonun gizli fonlarını yöneten akılsınız.",
+            facts: [
+                "Stüdyonun tüm sözleşmelerini ve finansal davalarını siz yönetirsiniz.",
+                "Kessler ile 25 yıllık kurucu ortaklık bağınız vardır.",
+                "Cinayet anında barda Frankie'nin karşısında içki içtiğinizi iddia ediyorsunuz."
+            ],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "A.J. ile bu stüdyoyu sıfırdan kurduk. Saat tam 22:30'da silah sesi geldiğinde salondaki barda Frankie'nin karşısındaydım; kadehime vermut koyuyordu. Duvardaki saat 22:30'u vuruyordu." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Tommy'nin sahte kimlikle stüdyoya sığındığını biliyorduk. Bir de 22:10 kesintisinde Dr. Hale'in salondan telaşla çıktığını gördüm." },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "A.J. ile bütçe yüzünden tartıştığımız doğru; ama bir hukukçu kan dökmez, yasalarla hesaplaşır. Barmen Frankie şahidimdir; silah patladığında onun karşısındaydım!" },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Masadaki kanıtlar Hollywood skandallarını gösteriyor. Tommy kaçıyordu, Hale morfin çalıyordu, Margaret ilaç atıyordu. Barmenin ifadesi ortada, suçsuzun ben olduğum açık!" }
+            ],
+            sins: "Katil sizsiniz! İsviçre'ye aktardığınız 250.000$ ortaya çıkacaktı. 22:15'te barda Frankie'ye bilerek saati sordunuz (bar saati 15 dk ileriydi, 22:30 dedi). Sonra servis merdiveninden çıktınız ve radyo çanı çalarken (gerçek 22:30'da) tetiği çektiniz. Kol düğmenizi masanın dibine düşürdünüz.",
+            goals: ["Frankie'nin 'saat 22:30'da bardaydı' ifadesine sığınarak alibinizi korumak.", "Oylamada çoğunluğun sizin dışınızda birini suçlamasını sağlamak."]
+        },
+        "7": {
+            name: "Frankie Malone",
+            title: "Baş Barmen & Servis Şefi",
+            bio: "Sunset Malikanesi'nin emektar barmenisiniz. Kimin ne içtiğini ve saat kaçta nerede oturduğunu en iyi siz bilirsiniz.",
+            facts: ["Bütün gece salondaki bar tezgahını siz yönettiniz.", "Kessler'ın içki siparişlerini ve tepsi düzenini yakından takip edersiniz."],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Silah patladığında Bay Walt Finch barda tam karşımdaydı; kadehine vermut dolduruyordum. Duvardaki saat tam 22:30 üzerindeydi." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Akşam 21:50'de Bayan Vivian kütüphaneden çıkarken yüzü kireç gibiydi." },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Faturaya 500$ fazla yazmıştım ama asıl gerçek şu: Arkamdaki saatin Kessler'ın emriyle 15 dakika ileri ayarlandığını telaştan tamamen unutmuştum!" },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Radyodaki haber çanı silah patladığı an çaldı! Yani ben saat 22:30 dediğimde gerçek saat henüz 22:15'ti! Finch barda 22:30'da değildi!" }
+            ],
+            sins: "İçki faturasında 500$ usulsüzlük yaptınız. Saatin 15 dk ileri olduğunu unutup Finch'e yanlış saat söylediniz.",
+            goals: ["Saatin 15 dakika ileri olduğunu dedektife açıklamak.", "500$'lık fatura açığını kimseye fark ettirmemek."]
+        },
+        "8": {
+            name: "Ellie Cole",
+            title: "Kessler’ın Özel Sekreteri",
+            bio: "Kessler’ın 6 yıllık sağ kolusunuz. Kasa şifrelerini, stüdyo ajandasını ve sözleşmeleri siz yönetirsiniz.",
+            facts: ["Kütüphanedeki çelik kasanın çalışma prensibini en iyi siz bilirsiniz.", "Kessler'ın randevu defterini siz tutarsınız."],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "22:10 ile 22:25 arasında alt kattaki yazıhanede daktilo başındaydım. Silah sesiyle fırladım." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Kütüphanedeki kasanın şifresini Bay Kessler dışında sadece Hukuk Müşavirimiz Walt Finch bilirdi!" },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Kessler vasiyetinde bana %5 pay bırakacaktı. Defterde borç avanslarım yazılıydı; o defter çıksa işim biterdi." },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Kasa zorlanmadı, şifreyle açıldı! O şifreyi çeviren tek kişi Finch'ti!" }
+            ],
+            sins: "Kardeşinizin tedavisi için kasadan aldığınız borç avanslar Kara Defter'de yazılıydı.",
+            goals: ["Kasa kombinasyonunu sadece Finch'in bildiğini ispatlamak.", "Defterdeki kendi adınızı temizlemek."]
+        },
+        "9": {
+            name: "Julian Croft",
+            title: "Auteur Yönetmen",
+            bio: "Titan Pictures'a Oscar kazandıran dahi yönetmensiniz. Kessler ile telif ve sansür kavgalarınız meşhurdur.",
+            facts: ["Hollywood'un en prestijli yönetmenisiniz.", "Kessler ile son projenin telif hakları yüzünden sert kavgalar ettiniz."],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Akşam boyunca terasta yangını seyrettim. Silah sesi geldiğinde salona yeni giriyordum." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "22:15 civarında Finch salonda yoktu; servis merdivenine doğru gölgeli bir silüet süzüldü." },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Kessler beni HUAC komitesine ihbar edecekti; solcu bildiriye imza atmıştım. Çöpteki yırtık telgraf dünkü kavgamızdan kalmadır!" },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Ben film kurgularım, cinayet kurgulamam! Katil parayı çalan hukukçudur!" }
+            ],
+            sins: "Solcu bildiriye imza attınız; Kessler bunu biliyordu. Çöpteki telgraf dünkü kavgadan kalmadır.",
+            goals: ["Bildiri imzanızın ortaya çıkmasını engellemek.", "Yeni filminiz için masadan bütçe sözü almak."]
+        },
+        "10": {
+            name: "Sylvia Beach",
+            title: "Magazin Yazarı & Dedikodu Kraliçesi",
+            bio: "Los Angeles Herald'ın en ünlü köşe yazarısınız. Bir cümlenizle yıldızların kariyerini bitirebilirsiniz.",
+            facts: ["Kessler bu gece size büyük bir manşet sözü vermişti.", "Malikanedeki tüm fısıldaşmaları not aldınız."],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Kessler bana büyük bir manşet sözü vermişti; silah patladığında kış bahçesi kapısındaydım." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Margaret ile Tommy'nin kış bahçesinde kaçış planı yaptıklarını kendi kulaklarımla duydum!" },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Kessler o defteri gazeteme satmam için 10.000$ komisyon istemişti; çantamda avans çeki vardı!" },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Ben cinayet işlemem, haberini yazarım! Katil saat hilesinin arkasına saklanan Finch'tir!" }
+            ],
+            sins: "Defteri ilk elden satın almak için Kessler'a rüşvet çeki getirdiniz.",
+            goals: ["Masadaki en az 3 sırrı öğrenip manşet çıkarmak.", "Doğru katili bulmak."]
+        },
+        "11": {
+            name: "Reyes Montoya",
+            title: "Baş Görüntü Yönetmeni",
+            bio: "Stüdyonun ışık ve kamera ustasısınız. Az konuşur, teknik ayrıntıları anında yakalarsınız.",
+            facts: ["Kamera ve aydınlatma ekiplerinin başındasınız.", "Cinayet saatinde garajda olduğunuzu belirttiniz."],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Elektrik kesilince jeneratör dairesine destek için garaja indim. Silah patladığında avludaydım." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Saat 22:20'de garajda Dr. Hale ile burun buruna geldim; yangın tüpünü devirdi ve çok panikti." },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Kessler beni İspanya yardımlarım yüzünden sınırdışı ettirmekle tehdit ediyordu; ama Hale'in ellerinde barut yoktu!" },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Dr. Hale garajdaydı; servis merdiveninden kütüphaneye çıkan Finch'ti!" }
+            ],
+            sins: "İspanya iç savaşına para yardımı yaptınız; Kessler bunu biliyordu.",
+            goals: ["Dr. Hale'in masumiyetini doğrulamak.", "Sınırdışı edilme tehdidinden kurtulmak."]
+        },
+        "12": {
+            name: "Henry Cobb",
+            title: "Ses Mühendisi & Teknisyen",
+            bio: "Stüdyonun ses kayıt teknisyenisiniz. Malikanedeki mikrofonları ve radyoyu siz kurdunuz.",
+            facts: ["Akustik ve ses sistemleri uzmanısınız.", "Kessler'ın kütüphanesindeki kayıt cihazını siz ayarladınız."],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Salondaki radyoyu ayarlıyordum; silah sesi geldiğinde radyo tam 22:30 haber çanını çalıyordu." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Kütüphanedeki masanın altında gizli bir tel kasetçalar vardı; Kessler görüşmelerini kaydederdi." },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Kessler beni şantaj kasetleri doldurmaya zorladı! O tel makarasını yok etmek istedim ama katil önce davrandı." },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Silah sesiyle radyonun 22:30 çanı aynı saniyede çaldı! Finch barda değil, kütüphanedeydi!" }
+            ],
+            sins: "Kessler'ın şantaj kayıt cihazlarını kurdunuz; suça alet edildiniz.",
+            goals: ["Radyo çanının doğruluğunu ispatlamak.", "Kendi adınızı ses kayıtlarından sildirmek."]
+        },
+        "13": {
+            name: "Clara Bowles",
+            title: "Baş Kostüm Tasarımcısı",
+            bio: "Stüdyonun gardırop şefisiniz. Dikişten ve kumaştan kimin ne taşıdığını anında anlarsınız.",
+            facts: ["Tüm oyuncuların ve yöneticilerin kıyafetlerini siz diktiniz.", "Cinayet anında mutfak koridorundaydınız."],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Mutfak koridorunda kürkleri kontrol ediyordum. Silah sesi servis kapısının önündeyken geldi." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Saat 22:20 sularında ahşap servis merdiveni gıcırdadı; yukarı hızla çıkan biri vardı." },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Stüdyodan ipek kumaş aşırmıştım. Merdivenden çıkan kişinin sırtındaki koyu renk kruvaze ceketi gördüm!" },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "O kruvaze ceketi Finch giyiyordu; kumaşını ben diktim, kendi dikişimi karanlıkta bile tanırım!" }
+            ],
+            sins: "Stüdyo deposundaki pahalı Fransız ipeklerini karaborsada sattınız.",
+            goals: ["Finch'in ceket kumaşını teşhis etmek.", "Kumaş hırsızlığınızı gizli tutmak."]
+        },
+        "14": {
+            name: "Nina De La Rosa",
+            title: "Baş Dublör & Kaskadör",
+            bio: "Hollywood'un en cesur kadın dublörüsünüz. Gözünüz karadır, hiçbir şeyden korkmazsınız.",
+            facts: ["Aksiyon sahnelerinde erkek dublörlere taş çıkartırsınız.", "Yangın başlayınca garajdaki motorunuza koştunuz."],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Motorumu korumak için dışarı çıktım. Silah patladığında garaj avlusundaydım." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Saat 22:25'te garaj kapısında Tommy'yi bavulla kaçarken gördüm!" },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Kaza sigortamı Kessler cebine indirmişti; Tommy'nin bavulundaki paradan pay istedim ama silahı yoktu." },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Tommy garajda arabayı çalıştırıyordu; katil merdivenden inen ceketli adamdı!" }
+            ],
+            sins: "Tommy'den sus payı olarak para koparmaya çalıştınız.",
+            goals: ["Tommy'nin garajda olduğunu kanıtlamak.", "Tazminat hakkınızı geri almak."]
+        },
+        "15": {
+            name: "Irving Thalberg Jr.",
+            title: "Rakip Stüdyo Temsilcisi",
+            bio: "Apex Pictures'ın veliahtısınız. Titan Pictures'ı ucuza kapatmak isteyen bir finans kurdusunuz.",
+            facts: ["Sektörün en zengin yapımcı ailelerinden birisiniz.", "Yemek odasında hisse pazarlığı yapıyordunuz."],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "22:15 ile 22:30 arasında yemek odasındaydım. Silah sesiyle donakaldık." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Titan Pictures son 6 aydır gizlice soyuluyordu; 250.000$'lık açığı piyasada herkes biliyordu." },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Hisseleri ucuza kapatmak için geldim; Margaret ve Vivian'ın hisseleri için çek hazırlamıştım ama öldürmedim!" },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Zürih dekontundaki imza Walt Finch'e ait! Şirketi soyan da vuran da odur!" }
+            ],
+            sins: "Stüdyonun iflasından faydalanıp hisseleri ucuza kapatmaya geldiniz.",
+            goals: ["Zürih dekontuyla Finch'i suçlamak.", "En az 2 hissedardan devir sözü almak."]
+        },
+        "16": {
+            name: "Pete Moretti",
+            title: "Kulüp İşletmecisi & Tefeci",
+            bio: "Sunset Strip'in yeraltı kulüplerini yöneten karanlık patronusunuz. Alacağınızı asla bırakmazsınız.",
+            facts: ["Ünlü kumarhanelerin sahibisiniz.", "Kessler ile karanlık finansman bağlarınız vardır."],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Salonda puro içiyordum; patlama sesi geldiğinde barmenin yanındaki masadaydım." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Balkondaki çip için bana bakmayın! 21:50'de yangın merdiveninden çıktım, camdan senetleri gösterdim. İçeri almadı! Kapı içeriden kilitliydi, içeri adım atmadım!" },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Tommy Rossi bana 10.000$ borçluydu! Borcumu tahsil etmeye geldim; borçlu adamı öldürürsem paramı alamam!" },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Benim kolumda Moretti arması var; masadaki kol düğmesi stüdyonun kravatlı hırsızına ait!" }
+            ],
+            sins: "Balkona tırmanıp camı tıklattınız ama kapı kilitliydi; içeri giremediniz.",
+            goals: ["Balkon kapısının içeriden sürgülü olduğunu kanıtlamak.", "Tommy'den borcunu tahsil etmek."]
+        },
+        "17": {
+            name: "Josie Packard",
+            title: "Gazino Şarkıcısı",
+            bio: "Moretti'nin kulübünde sahne alan, Titan Pictures'ın yeni müzikalinde başrol arayan bir vokalistsiniz.",
+            facts: ["Müzik kulağınız mükemmeldir.", "Akşam boyunca salondaki piyanoyu çaldınız."],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Piyano başındaydım; silah sesini kütüphaneden geldiğinde duydum." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "22:18'de salondaki radyoda sadece ara müzik çalıyordu; bar saati ise çoktan 22:30'u geçmişti!" },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Kessler ile geçen kış ilişkim olmuştu; fotoğraflar defterdeydi. Finch'ten onları çalmasını istedim ama reddetti!" },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Finch kasayı benim fotoğraflarım için değil, kendi zimmet evrakı için açtı!" }
+            ],
+            sins: "Kessler ile gizli otel fotoğraflarınız vardı; defteri ele geçirmek istediniz.",
+            goals: ["Radyo saatinin bar saatinden geride olduğunu teyit etmek.", "Yeni film için başrol sözü almak."]
+        },
+        "18": {
+            name: "Gus Green",
+            title: "Stüdyo Baş Muhasebecisi",
+            bio: "Titan Pictures'ın 15 yıldır defterlerini tutan, her kuruşun hesabını bilen korkak bir memursunuz.",
+            facts: ["Tüm faturalar sizin onayınızdan geçer.", "Kütüphanenin altındaki muhasebe odasındaydınız."],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Muhasebe odasında faturaları düzenliyordum; silah sesi tam tavanımdan geldi." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Saat 22:20'de koridordan hızlı ayak sesleri geçti; ardından tavandan boğuşma geldi." },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Walt Finch beni tehdit etti! İsviçre'ye aktarılan paranın sahte fişlerini bana zorla imzalattı!" },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "İmzalar benim olabilir ama 250.000$ Finch'in hesabına gitti; katil odur!" }
+            ],
+            sins: "Finch'in baskısıyla sahte yapım masrafı fişlerini imzaladınız.",
+            goals: ["Sahte fatura koçanlarını ele geçirip yakmak.", "Finch'in zimmetini itiraf ettirmek."]
+        },
+        "19": {
+            name: "Ruth Snyder",
+            title: "Magazin Stajyeri",
+            bio: "Sylvia Beach'in yanında çalışan, hırslı ve gözü açık genç bir fotoğrafçısınız.",
+            facts: ["Boynunuzda her an çekime hazır bir flaşlı makine taşırsınız.", "Misafirlerin arkasından ayrılmadınız."],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Palto odasındaydım; silah sesiyle elimdeki flaş ampulü yere düştü." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "22:15'te koridorda flaş patlatınca Finch'in hızla servis kapısına yöneldiğini gördüm!" },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Sylvia'nın çantasından notları aşırdım; kendi manşetimi patlatmak istiyordum!" },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Flaşım yalan söylemez! 22:15'te Finch barda değildi, servis kapısındaydı!" }
+            ],
+            sins: "Patronunuz Sylvia'nın çantasından gizlice şantaj notlarını çaldınız.",
+            goals: ["Finch'in servis kapısındaki anını dedektife anlatmak.", "Kendi haber dosyanızı oluşturmak."]
+        },
+        "20": {
+            name: "Ostrander Hill",
+            title: "Senato Komite Temsilcisi",
+            bio: "Washington HUAC komitesi adına Hollywood'u denetleyen resmi müfettişsiniz.",
+            facts: ["Federal yetkileriniz vardır.", "Kessler'dan sabah teslim alacağınız listeyi bekliyordunuz."],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Salonda bekliyordum; Kessler sabah bana komünist listesini teslim edecekti." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Duyurudan sonra Rossi ve Croft'un kaçış hareketleri federal şüphe alanına girdi." },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Kessler listeden adını silmem için bana 20.000$ rüşvet teklif etmişti; parayı almaya geldim ama öldürmedim!" },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Federal yasalar adına konuşuyorum: Katil stüdyoyu soyan Walt Finch'tir!" }
+            ],
+            sins: "Kessler'ın adını temize çıkarmak için rüşvet kabul etmeye hazırdınız.",
+            goals: ["Kara Defter'i ele geçirip resmi kayda geçirmek.", "Katili federal makamlara teslim etmek."]
+        },
+        "21": {
+            name: "Clarence Vance",
+            title: "Vivian’ın Menajeri & Kardeşi",
+            bio: "Vivian Vance’in hem öz kardeşi hem menajerisiniz. Ablanızı korumak için her kavgaya girersiniz.",
+            facts: ["Ablanızın yanından ayrılmazsınız.", "Stüdyonun fesih kararına çok öfkelisiniz."],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Ablamla terastaydık; silah sesiyle terasa açılan kapıya koştuk." },
+                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Ablamın şömineye attığı mektup aylar öncesine aitti; Kessler kasayı açarken yanında Finch vardı!" },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Ablamın 50.000$'lık sözleşmesini çalmak için servis merdivenine yanaştım; kapıdan Finch'in hızla indiğini görünce kaçtım!" },
+                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Servis merdiveninden inen adamı gördüm; ablam masumdur, katil Walt Finch'tir!" }
+            ],
+            sins: "Kasadan ablanızın sözleşmesini çalmaya çalıştınız ama Finch'i görünce kaçtınız.",
+            goals: ["Finch'in merdivenden indiğini tanıklıkla ispatlamak.", "Vivian'ı cinayet suçlamasından aklamak."]
         }
-        // Diğer 19 Karakter (3, 4, 5, 7, 8... 21) de benzer JSON formatında buraya eklenebilir.
     };
 
-    // URL'den karakter ID'sini çekme (örn: portal.html?char=6)
     function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(param);
@@ -386,23 +657,22 @@
 
     const charId = getQueryParam('char');
 
-    // Portal Yükleme Mantığı
     if (charId && characters[charId]) {
         const char = characters[charId];
         document.getElementById('char-name').innerText = char.name;
         document.getElementById('char-title').innerText = char.title;
         document.getElementById('char-bio').innerText = char.bio;
         
-        // Kimlik Gerçekleri
         const factsUl = document.getElementById('char-facts');
+        factsUl.innerHTML = '';
         char.facts.forEach(fact => {
             const li = document.createElement('li');
             li.innerHTML = fact;
             factsUl.appendChild(li);
         });
 
-        // Raundlar
         const roundsContainer = document.getElementById('rounds-container');
+        roundsContainer.innerHTML = '';
         char.rounds.forEach(round => {
             const roundDiv = document.createElement('div');
             roundDiv.className = 'round-box';
@@ -413,9 +683,9 @@
             roundsContainer.appendChild(roundDiv);
         });
 
-        // Sırlar & Hedefler
         document.getElementById('char-sins').innerText = char.sins;
         const goalsUl = document.getElementById('char-goals');
+        goalsUl.innerHTML = '';
         char.goals.forEach(goal => {
             const li = document.createElement('li');
             li.innerHTML = goal;
@@ -423,29 +693,21 @@
         });
 
     } else {
-        // ID bulunamazsa hata ekranı göster
         document.getElementById('player-screen').style.display = 'none';
         document.getElementById('error-screen').style.display = 'block';
     }
 
-    // Sekme Değiştirme Fonksiyonu
     function switchTab(tabId) {
-        const contents = document.querySelectorAll('.tab-content');
-        contents.forEach(content => content.classList.remove('active'));
-        
-        const buttons = document.querySelectorAll('.tab-btn');
-        buttons.forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
 
         document.getElementById(tabId).classList.add('active');
-        
-        // Tıklanan butonu aktif yap
         const index = ['tab-bio', 'tab-rounds', 'tab-secrets'].indexOf(tabId);
         if (index !== -1) {
-            buttons[index].classList.add('active');
+            document.querySelectorAll('.tab-btn')[index].classList.add('active');
         }
     }
 
-    // Spoiler Kalkanını Kaldırma
     function revealSecrets() {
         if (confirm("Bu bilgileri sadece siz görmelisiniz. Devam etmek istiyor musunuz?")) {
             document.getElementById('spoiler-overlay').style.display = 'none';
