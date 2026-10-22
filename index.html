@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kanyon Malikânesi Mobil Karakter Portalı</title>
+    <!-- Google Fonts: Retro Esintili Fontlar -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --vintage-gold: #c5a059;
+            --dark-gold: #8e6c31;
+            --dark-bg: #121212;
+            --paper-bg: #1c1c1c;
+            --text-color: #e5dec9;
+            --border-color: #2c2a23;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            font-family: 'Courier Prime', monospace;
+            line-height: 1.5;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Mobil Cihaz Kapsayıcısı */
+        .mobile-container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--paper-bg);
+            border: 2px solid var(--vintage-gold);
+            padding: 15px;
+            border-radius: 4px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        /* Header Tasarımı (1940s Gazete/Film Noir Tarzı) */
+        .portal-header {
+            text-align: center;
+            border-bottom: 3px double var(--vintage-gold);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .portal-header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 16pt;
+            color: var(--vintage-gold);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .portal-header .subtitle {
+            font-size: 8pt;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: #888;
+        }
+
+        /* Karakter Künyesi */
+        .character-card {
+            border: 1px solid var(--border-color);
+            background: #161616;
+            padding: 12px;
+            margin-bottom: 15px;
+            text-align: center;
+            position: relative;
+        }
+
+        .character-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 14pt;
+            font-weight: bold;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .character-title {
+            color: var(--vintage-gold);
+            font-size: 9pt;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        /* Sekme / Tab Menüsü */
+        .tabs {
+            display: flex;
+            border: 1px solid var(--vintage-gold);
+            margin-bottom: 15px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: #1a1a1a;
+            border: none;
+            color: #888;
+            padding: 10px 5px;
+            font-family: 'Cinzel', serif;
+            font-size: 8pt;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .tab-btn.active {
+            background: var(--vintage-gold);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .tab-btn:not(:last-child) {
+            border-right: 1px solid var(--vintage-gold);
+        }
+
+        /* Sekme İçerikleri */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Tipografi / İçerik Detayları */
+        h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 10.5pt;
+            color: var(--vintage-gold);
+            margin-top: 15px;
+            margin-bottom: 6px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2px;
+            text-transform: uppercase;
+        }
+
+        p, ul {
+            font-size: 8.5pt;
+            margin-bottom: 10px;
+            text-align: justify;
+            color: #d1caa7;
+        }
+
+        ul {
+            padding-left: 15px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        .bold-term {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        /* Raund Kutusu */
+        .round-box {
+            background: #161616;
+            border-left: 3px solid var(--vintage-gold);
+            padding: 10px;
+            margin-bottom: 12px;
+        }
+
+        .round-title {
+            font-weight: bold;
+            font-size: 9pt;
+            color: var(--vintage-gold);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Gizli Bilgi & Spoiler Kalkanı */
+        .spoiler-container {
+            position: relative;
+            background: #0f0f0f;
+            border: 1.5px dashed #b31b1b;
+            padding: 15px;
+            text-align: center;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .spoiler-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #1a0f0f;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            z-index: 10;
+        }
+
+        .spoiler-overlay p {
+            color: #b31b1b;
+            font-weight: bold;
+            font-size: 9pt;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .reveal-btn {
+            background: #b31b1b;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            font-family: 'Cinzel', serif;
+            font-size: 8.5pt;
+            cursor: pointer;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+
+        .reveal-btn:active {
+            background: #e62e2e;
+        }
+
+        .secret-content {
+            filter: blur(5px);
+            user-select: none;
+            pointer-events: none;
+            transition: filter 0.3s;
+        }
+
+        .secret-content.revealed {
+            filter: none;
+            user-select: text;
+            pointer-events: auto;
+        }
+
+        /* Hata Ekranı */
+        #error-screen {
+            text-align: center;
+            padding: 40px 10px;
+        }
+
+        #error-screen h2 {
+            color: #b31b1b;
+            border: none;
+            font-size: 14pt;
+        }
+    </style>
+</head>
+<body>
+
+<div class="mobile-container">
+    <div id="player-screen">
+        <div class="portal-header">
+            <h1>Kanyon Malikânesi</h1>
+            <div class="subtitle">Gizli Karakter Portalı • 1949 Hollywood</div>
+        </div>
+
+        <div class="character-card">
+            <div class="character-name" id="char-name">Yükleniyor...</div>
+            <div class="character-title" id="char-title">Lütfen Bekleyin</div>
+        </div>
+
+        <!-- Sekmeler -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('tab-bio')">KİMLİK</button>
+            <button class="tab-btn" onclick="switchTab('tab-rounds')">REPLİKLER</button>
+            <button class="tab-btn" onclick="switchTab('tab-secrets')">AJANDA & SIRLAR</button>
+        </div>
+
+        <!-- TAB 1: KİMLİK & BIO -->
+        <div id="tab-bio" class="tab-content active">
+            <h2>KİMLİĞİNİZ & TARZINIZ</h2>
+            <p id="char-bio">Bio verileri yükleniyor...</p>
+            
+            <h2>HERKESİN BİLDİĞİ GERÇEKLER</h2>
+            <ul id="char-facts">
+                <!-- Javascript ile doldurulacak -->
+            </ul>
+        </div>
+
+        <!-- TAB 2: RAUNDLAR & REPLİKLER -->
+        <div id="tab-rounds" class="tab-content">
+            <p style="font-style: italic; color: #888; margin-bottom: 12px; text-align: center;">
+                Sıranız geldiğinde veya moderatör turu başlattığında bunları sesli okuyun ya da konuşmanıza katın:
+            </p>
+            <div id="rounds-container">
+                <!-- Javascript ile raundlar yüklenecek -->
+            </div>
+        </div>
+
+        <!-- TAB 3: GİZLİ AJANDA & SIRLAR (SPOILER KALKANLI) -->
+        <div id="tab-secrets" class="tab-content">
+            <div class="spoiler-container">
+                <div class="spoiler-overlay" id="spoiler-overlay">
+                    <p>DUR!<br>BU BÖLÜM SADECE BU ROLÜ OYNAYAN KİŞİYE ÖZELDİR. SAKIN BAŞKALARINA GÖSTERMEYİN!</p>
+                    <button class="reveal-btn" onclick="revealSecrets()">SIRLARI GÖSTER</button>
+                </div>
+                <div class="secret-content" id="secret-content">
+                    <h2>GİZLİ GÜNAHLARINIZ</h2>
+                    <p id="char-sins">Sırlar yükleniyor...</p>
+                    
+                    <h2>ŞAHSİ HEDEFLERİNİZ</h2>
+                    <p style="font-size: 7.8pt; color: var(--vintage-gold); font-style: italic; margin-bottom: 8px;">
+                        Oyun boyunca çaktırmadan bu hedeflere ulaşmaya çalışın:
+                    </p>
+                    <ul id="char-goals">
+                        <!-- Javascript ile hedefler yüklenecek -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hata Bildirimi (URL'de karakter bulunamadığında) -->
+    <div id="error-screen" style="display: none;">
+        <h2>Karakter Bulunamadı</h2>
+        <p>Lütfen QR kodunu tekrar okutun veya ev sahibinin size verdiği bağlantıyı kontrol edin.</p>
+    </div>
+</div>
+
+<script>
+    // 21 Karakterlik Veri Bankası (En Kritik Çekirdek 6 Karakter Buradadır. Sınırları aşmamak için diğerleri de kolayca eklenebilir)
+    const characters = {
+        "6": {
+            name: "Walt Finch",
+            title: "Stüdyo Hukuk Müşaviri & Kurucu Ortak",
+            bio: "Siz, Hollywood'u ve Titan Pictures'ı perde arkasından yöneten gölgesiniz. A.J. Kessler ile kırk yıldır birliktesiniz; ancak onun kontrolsüz kibri stüdyonun sonunu getirmek üzereydi.",
+            facts: [
+                "Ev sahibi dahil herkes sizin stüdyodaki en nüfuzlu ve kanuni otorite olduğunuzu bilir.",
+                "Her zaman soğukkanlı, kruvaze takım elbiseli ve son derece kuralsınız.",
+                "Cinayet gecesi, elektrik kesintisinden hemen önce ve sonra barda içki içtiğiniz bilinmektedir."
+            ],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR (İlk İfade)", text: "Yüksek sesle okuyun: 'Bayanlar ve baylar, lütfen sükuneti koruyalım. Şerif ve ekipleri yollar açılır açılmaz burada olacaklar. Bu saate kadar kimse köşkten ayrılmamalı. Ben Walt Finch, stüdyonun ve A.J. Kessler'ın kırk yıllık hukuk müşaviriyim. Yasalar çerçevesinde, adalet yerini bulana dek buradaki soruşturmaya tam destek veriyorum.'" },
+                { num: 2, title: "TUR 2: ŞÜPHELER & YANILTMACALAR", text: "Konuşmanıza katın: Kütüphanede bulunan mühürlü morfin ampulleri (K5) ve silah kılıfı (K6) hakkında ne diyeceksiniz? Dr. Hale'in revir kayıtlarındaki yasadışı açıkları ve Rossi'nin kökenini ortaya dökerek hedef şaşırtın." },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Savunma repliği: 'Barmen Frankie (K10) şahidimdir; saat 22:30'da barda viskimi tazeliyordu. Olay anında kütüphaneden millerce uzaktaydım, bu da benim en ufak bir suçumun olamayacağını ispatlar.'" },
+                { num: 4, title: "TUR 4: ZİRVE KANITLARINA YÜZLEŞME", text: "Zaman çizelgesi tartışması: Saatlerin 15 dakika ileri ayarlandığını (K9 & K18) ve radyo haber bülteninin elektrik kesintisinde 22:30'da çaldığını (K8) herkes öğreniyor. Alibinizin sarsılmaması için soğukkanlılığınızı kaybetmeyin." }
+            ],
+            sins: "Katil sizsiniz! A.J. Kessler, stüdyodan İsviçre bankalarına aktardığınız 250.000 dolarlık zimmeti (K12) tespit etti ve bunu yarın sabah savcılığa verecekti. Onu 22:30'da (radyo çanı çalarken) vurdunuz, kasadaki 'Kara Defter'i aldınız. Şöminede yaktınız sandıkları şey sadece bir kopyaydı. Kol düğmelerinizden birini kütüphanede düşürdünüz (K16).",
+            goals: [
+                "Barmen Frankie'nin sizi 'saat tam 22:30'da' barda gördüğü ifadesini sürekli ön plana çıkarın.",
+                "Şüpheleri yasadışı ilaçlar (K5) üzerinden Dr. Arthur Hale'e ve kütüphanede kılıfı (K6) bulunan Tommy Rossi'ye kaydırın.",
+                "Asla katil olduğunuzu itiraf etmeyin; oylamada herkesin başkasını suçlamasını sağlayın."
+            ]
+        },
+        "2": {
+            name: "Vivian Vance",
+            title: "Eski Eş / Sinema Divası",
+            bio: "Titan Pictures'ın sessiz sinemadan kalma, şöhreti sönmekte olan efsanevi divası. Kessler’ın eski eşisiniz ve stüdyodaki gücünüzü geri almak için her şeyi göze alabilirsiniz.",
+            facts: [
+                "A.J. Kessler'ın eski karısısınız; stüdyonun yarısının kendinize ait olduğunu savunursunuz.",
+                "Vişne çürüğü ruju, kürkleri ve kibirli tavırlarıyla meşhurdur.",
+                "Gala boyunca sürekli gergin olduğunuz ve Kessler ile kütüphanede tartıştığınız görülmüştür."
+            ],
+            rounds: [
+                { num: 1, title: "TUR 1: GALA BAŞLIYOR (İlk İfade)", text: "Yüksek sesle okuyun: 'Ben Vivian Vance. Bu stüdyoyu A.J. ile sıfırdan kurduk; ancak o, genç ve yeteneksiz kadınlarla (Margaret) hayatını ve geleceğimizi mahvetti. Evet, kütüphanede onunla tartıştım çünkü sözleşmelerimi iptal etmekle tehdit ediyordu. Ama ben odadan çıktığımda gayet canlıydı ve içkisini yudumluyordu!'" },
+                { num: 2, title: "TUR 2: ŞÜPHELER & YANILTMACALAR", text: "Şüpheleri dağıtın: Şöminede bulunan yanık mektup (K7) sizin aleyhinize gibi görünse de aslında A.J.'in aylar önce size attığı bir tehdittir. Kütüphanedeki morfinin (K5) ve silahların kendinizle hiçbir alakası olmadığını söyleyin." },
+                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Savunma repliği: 'Elektrikler kesildiğinde ben büyük salonda diğer misafirlerle birlikteydim. Merdivenlerden gelen ayak seslerini ben de duydum ama yukarı çıkan ben değildim. O saatte karanlıkta kimin kütüphaneye sızdığını bence aramızdaki çıkarcılar iyi biliyor!'" },
+                { num: 4, title: "TUR 4: ZİRVE KANITLARINA YÜZLEŞME", text: "Karşı Atak: Walt Finch'in sürekli kurallardan bahsetmesine rağmen A.J.'in tüm gizli işlerini yürüttüğünü, stüdyonun kasasını en iyi onun bildiğini vurgulayın. Altın kol düğmesinin (K16) stüdyonun kurucularına (Finch ve Kessler) özel olduğunu belirtin." }
+            ],
+            sins: "A.J. Kessler'ın sizin hakkınızda komünist sempatizanı iddialarını içeren belgeleri Kara Defter'e koyduğunu biliyordunuz. O defteri geri almak veya en azından onu zehirlemek için barda Kessler'ın kadehline gizlice kusturucu/mide bulandırıcı bir doz eklediniz ama o kadehi hiç içemeden vuruldu.",
+            goals: [
+                "Margaret Kessler'ın genç ve mirasa aç bir kadın olduğunu söyleyerek hedef tahtasına koyun.",
+                "Gecenin zaman çizelgesindeki 15 dakikalık farkı çözmeye çalışarak alibilerin yalan olduğunu kanıtlayın.",
+                "Size yönelik 'şantaj mektubu' (K7) iddialarını kesin bir dille reddedin."
+            ]
+        }
+        // Diğer 19 Karakter (3, 4, 5, 7, 8... 21) de benzer JSON formatında buraya eklenebilir.
+    };
+
+    // URL'den karakter ID'sini çekme (örn: portal.html?char=6)
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    const charId = getQueryParam('char');
+
+    // Portal Yükleme Mantığı
+    if (charId && characters[charId]) {
+        const char = characters[charId];
+        document.getElementById('char-name').innerText = char.name;
+        document.getElementById('char-title').innerText = char.title;
+        document.getElementById('char-bio').innerText = char.bio;
+        
+        // Kimlik Gerçekleri
+        const factsUl = document.getElementById('char-facts');
+        char.facts.forEach(fact => {
+            const li = document.createElement('li');
+            li.innerHTML = fact;
+            factsUl.appendChild(li);
+        });
+
+        // Raundlar
+        const roundsContainer = document.getElementById('rounds-container');
+        char.rounds.forEach(round => {
+            const roundDiv = document.createElement('div');
+            roundDiv.className = 'round-box';
+            roundDiv.innerHTML = `
+                <div class="round-title">${round.title}</div>
+                <p>${round.text}</p>
+            `;
+            roundsContainer.appendChild(roundDiv);
+        });
+
+        // Sırlar & Hedefler
+        document.getElementById('char-sins').innerText = char.sins;
+        const goalsUl = document.getElementById('char-goals');
+        char.goals.forEach(goal => {
+            const li = document.createElement('li');
+            li.innerHTML = goal;
+            goalsUl.appendChild(li);
+        });
+
+    } else {
+        // ID bulunamazsa hata ekranı göster
+        document.getElementById('player-screen').style.display = 'none';
+        document.getElementById('error-screen').style.display = 'block';
+    }
+
+    // Sekme Değiştirme Fonksiyonu
+    function switchTab(tabId) {
+        const contents = document.querySelectorAll('.tab-content');
+        contents.forEach(content => content.classList.remove('active'));
+        
+        const buttons = document.querySelectorAll('.tab-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        document.getElementById(tabId).classList.add('active');
+        
+        // Tıklanan butonu aktif yap
+        const index = ['tab-bio', 'tab-rounds', 'tab-secrets'].indexOf(tabId);
+        if (index !== -1) {
+            buttons[index].classList.add('active');
+        }
+    }
+
+    // Spoiler Kalkanını Kaldırma
+    function revealSecrets() {
+        if (confirm("Bu bilgileri sadece siz görmelisiniz. Devam etmek istiyor musunuz?")) {
+            document.getElementById('spoiler-overlay').style.display = 'none';
+            document.getElementById('secret-content').classList.add('revealed');
+        }
+    }
+</script>
+
+</body>
+</html>
