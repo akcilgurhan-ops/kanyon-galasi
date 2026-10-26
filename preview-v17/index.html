@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="tr">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#121417"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow,noarchive"><title>Kanyon Malikânesi · Güvenli Tur Testi v1.7.1</title>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#121417"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow,noarchive"><title>Kanyon Malikânesi · Güvenli Tur Testi v1.7.2</title>
 <style>
 :root{color-scheme:dark;--base:#121416;--surface:#202125;--gold:#d6b574;--text:#f5eddd;--muted:#c5b8a0;--border:#766343;--warn:#cc8880}
 *{box-sizing:border-box}body{margin:0;background:var(--base);color:var(--text);font:16px/1.55 Georgia,'Times New Roman',serif;padding:18px 10px 50px}
@@ -38,7 +38,7 @@ footer{margin-top:25px;padding-top:14px;border-top:1px solid var(--border);text-
 <section id="private" class="section" hidden><div class="private" id="privateGate"><h3>Yalnızca rol sahibine özel</h3><p>Bu bölüm sizin gerçek geçmişinizi ve şahsi hedeflerinizi içerir. Ekranı başkalarına göstermeyin.</p><button class="primary" id="showPrivate">Kendi sırlarımı aç</button></div>
 <div class="private" id="privateContent" hidden><h3>Yalnızca sizin bildiğiniz gerçekler</h3><p id="secret"></p><h3>Şahsi hedefler</h3><div id="goals"></div><button class="secondary" id="closePrivate">Sırlarımı gizle</button></div></section>
 </div>
-<footer>Türkçe TEST v1.7.1 · Satışa hazır değildir · Final çözümü bu sitede bulunmaz</footer>
+<footer>Türkçe TEST v1.7.2 · Satışa hazır değildir · Final çözümü bu sitede bulunmaz</footer>
 </main>
 <script>
 'use strict';
@@ -46,6 +46,11 @@ const $=id=>document.getElementById(id);
 const enc=new TextEncoder();
 let token=null, payload=null, visibleRound=1;
 const released=new Map();
+let storageKey='';
+let savedPins={};
+// Codes are remembered only on this browser, separated for each character.
+function savePins(){try{localStorage.setItem(storageKey,JSON.stringify(savedPins));}catch(_){/* Browsing still works when storage is unavailable. */}}
+function readPins(){try{const value=JSON.parse(localStorage.getItem(storageKey)||'{}');return value&&typeof value==='object'&&!Array.isArray(value)?value:{};}catch(_){return {};}}
 function b64(x){return Uint8Array.from(atob(x),a=>a.charCodeAt(0));}
 function hex(x){return Array.from(x,b=>b.toString(16).padStart(2,'0')).join('');}
 async function keyFor(password,s,info){
@@ -70,14 +75,33 @@ function showReleased(){
  const opened=released.get(visibleRound);
  $('unlockPanel').hidden=!!opened;
  $('roundContent').hidden=!opened;
- if(opened){$('roundTitle').textContent=visibleRound+'. Tur';$('speech').textContent=opened;}
- else{$('speech').textContent='';}
+ if(opened){
+   $('roundTitle').textContent=visibleRound+'. Tur';
+   $('speech').textContent=opened;
+   $('speech').hidden=false;
+   $('closeRound').textContent='Tur metnini gizle';
+ }else{$('speech').textContent='';}
+}
+async function restoreReleased(){
+ savedPins=readPins();
+ let changed=false;
+ for(let n=1;n<=4;n++){
+   const pin=savedPins[n];
+   if(typeof pin!=='string'||!/^[0-9]{4}$/.test(pin)){if(pin!==undefined){delete savedPins[n];changed=true;}continue;}
+   try{
+     const obj=await openBlock(payload.rounds[n-1],token+'|'+pin,'KM|v1.7|round|'+n);
+     if(obj.round!==n||typeof obj.speech!=='string')throw Error('invalid saved round');
+     released.set(n,obj.speech);
+   }catch(_){delete savedPins[n];changed=true;}
+ }
+ if(changed)savePins();
 }
 async function init(){
  const params=new URLSearchParams(location.hash.slice(1));token=params.get('key');
  if(!token||! /^[A-Za-z0-9_-]{43}$/.test(token))throw Error('bad key');
  const digest=await crypto.subtle.digest('SHA-256',enc.encode('KM17:file:'+token));
  const filename=hex(new Uint8Array(digest)).slice(0,40);
+ storageKey='KM-v1.7.2:opened:'+filename;
  const response=await fetch('./roles/'+filename+'.json',{cache:'no-store'});
  if(!response.ok)throw Error('missing');
  payload=await response.json();if(payload.v!==17||payload.rounds.length!==4)throw Error('invalid');
@@ -97,11 +121,14 @@ async function init(){
    try{
       const obj=await openBlock(payload.rounds[n-1],token+'|'+code,'KM|v1.7|round|'+n);
       if(obj.round!==n||typeof obj.speech!=='string')throw Error('invalid round');
-      released.set(n,obj.speech);$('roundCode').value=''; showReleased();
+      released.set(n,obj.speech);savedPins[n]=code;savePins();$('roundCode').value=''; showReleased();
    }catch(e){$('codeError').hidden=false;}
    finally{$('unlock').disabled=false;}
  });
- $('closeRound').addEventListener('click',()=>{released.delete(visibleRound);showReleased();});
+ $('closeRound').addEventListener('click',()=>{
+   const speech=$('speech');speech.hidden=!speech.hidden;
+   $('closeRound').textContent=speech.hidden?'Tur metnini yeniden göster':'Tur metnini gizle';
+ });
  $('showPrivate').addEventListener('click',async()=>{
   $('showPrivate').disabled=true;
   try{
@@ -114,6 +141,7 @@ async function init(){
  });
  $('closePrivate').addEventListener('click',()=>{$('privateContent').hidden=true;$('privateGate').hidden=false;$('secret').textContent='';$('goals').replaceChildren();});
  document.querySelectorAll('[data-part]').forEach(b=>b.addEventListener('click',()=>part(b.dataset.part)));
+ await restoreReleased();
  selectRound(1);$('app').hidden=false;
 }
 init().catch(()=>{$('error').hidden=false;}).finally(()=>{$('status').hidden=true;});
