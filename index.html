@@ -1,781 +1,154 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Kanyon Malikânesi Mobil Karakter Portalı</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --vintage-gold: #c5a059;
-            --dark-gold: #8e6c31;
-            --dark-bg: #121212;
-            --paper-bg: #1c1c1c;
-            --text-color: #e5dec9;
-            --border-color: #2c2a23;
-        }
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-        body {
-            background-color: var(--dark-bg);
-            color: var(--text-color);
-            font-family: 'Courier Prime', monospace;
-            line-height: 1.45;
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-        }
-        .mobile-container {
-            width: 100%;
-            max-width: 480px;
-            background: var(--paper-bg);
-            border: 2px solid var(--vintage-gold);
-            padding: 14px;
-            border-radius: 4px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.85);
-        }
-        .portal-header {
-            text-align: center;
-            border-bottom: 3px double var(--vintage-gold);
-            padding-bottom: 8px;
-            margin-bottom: 12px;
-        }
-        .portal-header h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 15pt;
-            color: var(--vintage-gold);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .portal-header .subtitle {
-            font-size: 7.5pt;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            color: #888;
-        }
-        .character-card {
-            border: 1px solid var(--border-color);
-            background: #161616;
-            padding: 10px;
-            margin-bottom: 12px;
-            text-align: center;
-        }
-        .character-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 13pt;
-            font-weight: bold;
-            color: #fff;
-            text-transform: uppercase;
-        }
-        .character-title {
-            color: var(--vintage-gold);
-            font-size: 8.5pt;
-            text-transform: uppercase;
-            margin-top: 2px;
-        }
-        .tabs {
-            display: flex;
-            border: 1px solid var(--vintage-gold);
-            margin-bottom: 12px;
-            border-radius: 3px;
-            overflow: hidden;
-        }
-        .tab-btn {
-            flex: 1;
-            background: #1a1a1a;
-            border: none;
-            color: #888;
-            padding: 9px 4px;
-            font-family: 'Cinzel', serif;
-            font-size: 7.5pt;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-transform: uppercase;
-        }
-        .tab-btn.active {
-            background: var(--vintage-gold);
-            color: #000;
-            font-weight: bold;
-        }
-        .tab-btn:not(:last-child) {
-            border-right: 1px solid var(--vintage-gold);
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        h2 {
-            font-family: 'Cinzel', serif;
-            font-size: 9.5pt;
-            color: var(--vintage-gold);
-            margin-top: 12px;
-            margin-bottom: 5px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 2px;
-            text-transform: uppercase;
-        }
-        p, ul {
-            font-size: 8.2pt;
-            margin-bottom: 8px;
-            text-align: justify;
-            color: #d1caa7;
-        }
-        ul {
-            padding-left: 14px;
-        }
-        li {
-            margin-bottom: 4px;
-        }
-
-        /* KADEMELİ TUR SEÇİCİ */
-        .round-selector {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 12px;
-        }
-        .round-nav-btn {
-            flex: 1;
-            background: #151515;
-            border: 1px solid var(--dark-gold);
-            color: var(--vintage-gold);
-            padding: 8px 2px;
-            font-family: 'Cinzel', serif;
-            font-size: 7.5pt;
-            cursor: pointer;
-            border-radius: 3px;
-            text-transform: uppercase;
-            transition: all 0.2s;
-        }
-        .round-nav-btn.active {
-            background: var(--vintage-gold);
-            color: #000;
-            font-weight: bold;
-            border-color: var(--vintage-gold);
-        }
-        .round-card {
-            display: none;
-            background: #161616;
-            border-left: 3px solid var(--vintage-gold);
-            padding: 12px 14px;
-            margin-bottom: 10px;
-            border-radius: 2px;
-            animation: fadeIn 0.25s ease-in-out;
-        }
-        .round-card.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .round-title {
-            font-weight: bold;
-            font-size: 8.8pt;
-            color: var(--vintage-gold);
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            border-bottom: 1px solid #222;
-            padding-bottom: 3px;
-        }
-        .round-notice {
-            font-size: 7pt;
-            font-style: italic;
-            color: #888;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .spoiler-container {
-            position: relative;
-            background: #0f0f0f;
-            border: 1.5px dashed #b31b1b;
-            padding: 12px;
-            text-align: center;
-            border-radius: 4px;
-            margin-top: 8px;
-        }
-        .spoiler-overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: #1a0f0f;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 12px;
-            z-index: 10;
-        }
-        .spoiler-overlay p {
-            color: #b31b1b;
-            font-weight: bold;
-            font-size: 8.5pt;
-            margin-bottom: 8px;
-            text-align: center;
-        }
-        .reveal-btn {
-            background: #b31b1b;
-            color: #fff;
-            border: none;
-            padding: 7px 14px;
-            font-family: 'Cinzel', serif;
-            font-size: 8pt;
-            cursor: pointer;
-            border-radius: 3px;
-            text-transform: uppercase;
-        }
-        .secret-content {
-            filter: blur(5px);
-            user-select: none;
-            pointer-events: none;
-            transition: filter 0.3s;
-        }
-        .secret-content.revealed {
-            filter: none;
-            user-select: text;
-            pointer-events: auto;
-        }
-        #error-screen {
-            text-align: center;
-            padding: 30px 10px;
-        }
-        #error-screen h2 {
-            color: #b31b1b;
-            border: none;
-            font-size: 13pt;
-            margin-bottom: 8px;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#131416">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Kanyon Malikânesi · Karakter Portalı</title>
+  <style>
+    :root{color-scheme:dark;--bg:#121315;--card:#202124;--card2:#171819;--gold:#d6b571;--light:#f4ebd6;--muted:#c0b5a0;--red:#d77a71;--line:#66583f}
+    *{box-sizing:border-box}
+    html{font-size:16px}
+    body{margin:0;padding:20px 12px 50px;font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--light);line-height:1.55}
+    .wrap{max-width:720px;margin:0 auto;border:1px solid var(--gold);border-radius:12px;background:var(--card);padding:clamp(16px,4vw,32px);box-shadow:0 16px 42px #0009}
+    header{text-align:center;border-bottom:1px solid var(--line);padding-bottom:16px}
+    .eyebrow{font:600 .73rem system-ui,sans-serif;letter-spacing:.19em;color:var(--muted);text-transform:uppercase}
+    header h1{font-size:clamp(1.65rem,5.4vw,2.35rem);letter-spacing:.025em;margin:6px 0 3px;color:var(--gold)}
+    header .sub{font-size:.95rem;color:var(--muted);margin:0}
+    .roleHead{margin:20px 0;background:var(--card2);border:1px solid var(--line);padding:16px;text-align:center}
+    .roleHead .roleN{font:.82rem system-ui,sans-serif;color:var(--gold);letter-spacing:.1em}
+    .roleHead h2{font-size:1.7rem;margin:5px 0;color:white}
+    .roleHead .title{font-size:.94rem;color:var(--gold)}
+    .tabs{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:5px;margin:14px 0 20px}
+    button{cursor:pointer;font-family:inherit}
+    .tab{min-height:48px;background:#141516;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:8px 5px;font-size:.95rem}
+    .tab[aria-selected=true],.roundBtn.active{background:var(--gold);color:#16130d;font-weight:700}
+    [hidden]{display:none!important}
+    h3{color:var(--gold);font-size:1.16rem;margin:23px 0 7px;line-height:1.3}
+    p{font-size:1.02rem;margin:8px 0 12px;overflow-wrap:break-word}
+    .note{color:var(--muted);font-size:.88rem}
+    .speech{background:var(--card2);padding:20px;border-left:4px solid var(--gold);font-size:1.1rem;line-height:1.72}
+    .rounds{display:flex;gap:7px;margin:16px 0;flex-wrap:wrap}
+    .roundBtn{flex:1;min-width:62px;background:#151617;border:1px solid var(--line);border-radius:5px;color:var(--gold);padding:13px 8px;font-size:.93rem}
+    .roundBtn:disabled{opacity:.48;cursor:not-allowed}
+    .advance{display:block;margin-top:16px;width:100%;padding:13px 14px;background:transparent;border:1px solid var(--gold);border-radius:5px;color:var(--gold);font-size:1rem}
+    .secretCurtain{border:1px dashed #b96a65;background:#261d1d;border-radius:6px;padding:24px 18px;text-align:center}
+    .secretCurtain h3{color:#f3aaa2;margin:0 0 8px}
+    .secretCurtain p{color:#efd0cc}
+    .secretBtn{display:block;width:100%;padding:14px;background:#9b4c45;color:white;border:0;border-radius:5px;font:700 1.05rem system-ui,sans-serif}
+    .private{background:#211a1a;border:1px solid #a76562;border-radius:6px;padding:16px 18px}
+    .private h3{color:#f0a8a0}
+    .goal{margin:12px 0;padding:12px;background:#312626;border-left:3px solid #c28075}
+    .points{color:#f5aaa2;font-family:system-ui,sans-serif;font-weight:700;letter-spacing:.03em}
+    .alert{margin:18px auto;padding:16px;border:1px solid #8d5350;background:#291f1f;color:#f4d0c9;border-radius:8px}
+    footer{margin-top:27px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font:.78rem system-ui,sans-serif;text-align:center}
+    :focus-visible{outline:3px solid #fcdf9c;outline-offset:3px}
+    @media(max-width:400px){body{padding:10px 5px 35px}.wrap{padding:13px}.tab{font-size:.85rem}.roundBtn{font-size:.85rem}.roleHead h2{font-size:1.42rem}}
+  </style>
 </head>
 <body>
-
-<div class="mobile-container">
-    <div id="player-screen">
-        <div class="portal-header">
-            <h1>Kanyon Malikânesi</h1>
-            <div class="subtitle">Gizli Karakter Portalı • 1949 Hollywood</div>
-        </div>
-
-        <div class="character-card">
-            <div class="character-name" id="char-name">Yükleniyor...</div>
-            <div class="character-title" id="char-title">Lütfen Bekleyin</div>
-        </div>
-
-        <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('tab-bio')">KİMLİK</button>
-            <button class="tab-btn" onclick="switchTab('tab-rounds')">REPLİKLER</button>
-            <button class="tab-btn" onclick="switchTab('tab-secrets')">AJANDA & SIRLAR</button>
-        </div>
-
-        <!-- TAB 1: KİMLİK -->
-        <div id="tab-bio" class="tab-content active">
-            <h2>KİMLİĞİNİZ & TARZINIZ</h2>
-            <p id="char-bio"></p>
-            
-            <h2>HERKESİN BİLDİĞİ GERÇEKLER</h2>
-            <ul id="char-facts"></ul>
-        </div>
-
-        <!-- TAB 2: REPLİKLER (KADEMELİ SİSTEM) -->
-        <div id="tab-rounds" class="tab-content">
-            <p style="font-style: italic; color: #888; margin-bottom: 10px; text-align: center; font-size: 7.2pt;">
-                Moderatör sırayı verdiğinde aşağıdaki butonlardan aktif turun metnini açıp okuyun:
-            </p>
-            
-            <!-- Tur Değiştirme Butonları -->
-            <div class="round-selector">
-                <button id="btn-round-1" class="round-nav-btn active" onclick="showRound(1)">1. TUR</button>
-                <button id="btn-round-2" class="round-nav-btn" onclick="showRound(2)">2. TUR</button>
-                <button id="btn-round-3" class="round-nav-btn" onclick="showRound(3)">3. TUR</button>
-                <button id="btn-round-4" class="round-nav-btn" onclick="showRound(4)">4. TUR</button>
-            </div>
-
-            <!-- Tur Kartları Konteyneri -->
-            <div id="rounds-container"></div>
-            
-            <div class="round-notice">
-                ⚠️ Erken ipucu almamak için moderatör yeni tura geçmeden sonraki turlara tıklamayınız.
-            </div>
-        </div>
-
-        <!-- TAB 3: GİZLİ AJANDA -->
-        <div id="tab-secrets" class="tab-content">
-            <div class="spoiler-container">
-                <div class="spoiler-overlay" id="spoiler-overlay">
-                    <p>DUR!<br>BU BÖLÜM SADECE BU ROLÜ OYNAYAN KİŞİYE ÖZELDİR. KİMSEYE GÖSTERMEYİN!</p>
-                    <button class="reveal-btn" onclick="revealSecrets()">SIRLARI GÖSTER</button>
-                </div>
-                <div class="secret-content" id="secret-content">
-                    <h2>GİZLİ GÜNAHLARINIZ</h2>
-                    <p id="char-sins"></p>
-                    
-                    <h2>ŞAHSİ HEDEFLERİNİZ</h2>
-                    <ul id="char-goals"></ul>
-                </div>
-            </div>
-        </div>
+  <main class="wrap">
+    <header><div class="eyebrow">1949 · Hollywood · Gizli Gala</div><h1>Kanyon Malikânesi</h1><p class="sub">Kişiye özel karakter dosyası</p></header>
+    <div id="loading" class="note" role="status" aria-live="polite" style="padding:22px 0;text-align:center">Karakter dosyanız açılıyor…</div>
+    <div id="error" class="alert" hidden role="alert">Karakter dosyası açılamadı. Masanızdaki QR kodunu tekrar okutun. İnternet bağlantınızı kontrol edin. Bu dosyanın GitHub Pages üzerinde yayımlanmış güncel sürüm olması gerekir.</div>
+    <div id="app" hidden>
+      <div class="roleHead"><div class="roleN" id="roleNumber"></div><h2 id="roleName"></h2><div class="title" id="roleTitle"></div></div>
+      <nav class="tabs" aria-label="Karakter bölümleri">
+        <button type="button" class="tab" data-tab="identity" aria-selected="true">Kimlik</button>
+        <button type="button" class="tab" data-tab="dialogues" aria-selected="false">Replikler</button>
+        <button type="button" class="tab" data-tab="private" aria-selected="false">Ajanda ve sırlar</button>
+      </nav>
+      <section id="identity" class="page"><h3>Sizin hakkınızda</h3><p id="about"></p><h3>Karakteri nasıl oynayın?</h3><p id="style"></p><p class="note">Oyun yöneticisi de oyuna katılır. Herkes yalnızca kendi karakterinin özel sayfasını okumalıdır.</p></section>
+      <section id="dialogues" class="page" hidden>
+        <p class="note">Yalnızca masada başlamış olan turun metnini açın. Gelecek turu erken görmek için ilerlemeyin.</p>
+        <div class="rounds" id="roundButtons" aria-label="Konuşma turları"></div>
+        <h3 id="roundTitle"></h3><p id="roundText" class="speech"></p>
+        <button id="nextRound" type="button" class="advance">Sıradaki turu aç</button>
+      </section>
+      <section id="private" class="page" hidden>
+        <div id="curtain" class="secretCurtain"><h3>Yalnızca rol sahibine özel</h3><p>Bu bölüm oyuncunun kendi gizli geçmişini ve hedeflerini içerir. Telefonunuzu başka bir oyuncuya göstermeyin.</p><button id="reveal" type="button" class="secretBtn">Kendi sırlarımı göster</button></div>
+        <div id="secretPane" class="private" hidden><h3>Yalnızca sizin bildiğiniz gerçekler</h3><p id="secretText"></p><h3>Şahsi hedefleriniz</h3><div id="goalList"></div><button type="button" class="advance" id="hideSecret">Sırları gizle</button></div>
+      </section>
     </div>
-
-    <!-- Hata Bildirimi -->
-    <div id="error-screen" style="display: none;">
-        <h2>Karakter Bulunamadı</h2>
-        <p style="text-align: center;">Lütfen masanızdaki QR kodunu tekrar okutun. Adresi elinizle yazıyorsanız, bağlantıdaki şifreyi (token) doğru girdiğinizden emin olun.</p>
-    </div>
-</div>
-
+    <footer>Türkçe test sürümü v1.6 · Satışa hazır değildir · Bu sayfada final çözümü bulunmaz</footer>
+  </main>
 <script>
-    const characters = {
-        "x7m9q": {
-            name: "Whitcomb O'Brien",
-            title: "Güvenlik Şefi & Özel Dedektif",
-            bio: "Eski LAPD cinayet masası dedektifisiniz. Kessler sizi galanın güvenliğini sağlamak için tuttu; ancak fırtına ve yangın yüzünden şerif gelene kadar bu cinayeti siz yönetmek zorundasınız.",
-            facts: [
-                "Olay yeri tutanaklarını ve şüpheli ifadelerini siz topluyorsunuz.",
-                "Eski polis refleksiyle herkesi sorgulama yetkisine sahipsiniz.",
-                "Akşam boyunca ana ferforje giriş kapısında ve güvenlik kulübesinde olduğunuzu belirttiniz."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Kapılar kilitlendi ve yangın yolu kesti. Saat 22:15 ile 22:30 arasında ana ferforje giriş kapısındaydım. Silah sesiyle içeri koştum. Şerif gelene kadar kimse buradan ayrılamaz!" },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Elektrikler geldiğinde koridorda bir parazit sesi duydum. Ayrıca servis merdiveninin paspası kaymıştı; birisi karanlıkta orayı aceleyle kullanmıştı." },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Kendi kusurumu kayda geçireyim: Girişte yalnız değildim. Kessler bana 5.000$ teklif ederek misafirlerin odalarını aramamı istemişti. Odaları arıyordum ama kütüphaneye girmedim!" },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Telsizim 22:22'de misafir katında cızırdadı, uşak beni duydu. Kütüphaneye inen servis merdiveninde değildim!" }
-            ],
-            sins: "Kessler'ın emriyle misafirlerin odalarını gizlice aradınız. Telsizinizin 2. katta cızırdaması dedektiflik kimliğinizi zedeleyebilir.",
-            goals: ["Masadaki ipuçlarını tarafsızca birleştirip gerçek faili ortaya çıkarmak.", "Odalarda yetkisiz arama yaptığınız için cinayetle suçlanmamak."]
-        },
-        "v3k2p": {
-            name: "Vivian Vance",
-            title: "Eski Eş / Sinema Divası",
-            bio: "Titan Pictures'ın sessiz sinemadan kalma efsanevi divası. Kessler’ın eski eşisiniz ve stüdyodan kovulmayı hazmedemiyorsunuz.",
-            facts: [
-                "Kessler'ın eski karısısınız; stüdyonun yarısının kendinize ait olduğunu savunursunuz.",
-                "Kürk etolünüz ve kibirli tavırlarınızla tanınırsınız.",
-                "Akşam boyunca terasta hava aldığınızı iddia ediyorsunuz."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "A.J.'in saygısızca duyurusundan sonra migrenim tuttu. Saat 22:15'ten silah sesine kadar batı terasında rüzgarı soludum. A.J.'i salondan ayrıldıktan sonra canlı görmedim." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Margaret kilerde olduğunu iddia ediyor ama yemekten sonra kütüphane koridorunda elinde kadehle telaşla süzüldüğünü gördüm; kocamın servetine konmak isteyen o kadını sorgulayın!" },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Saklamanın anlamı yok: 21:55'te kütüphaneye gizlice girdim ve konyak şişesine kusturucu toz döktüm! Amacım onu öldürmek değil, kürsüde rezil olmasını sağlamaktı! Kurşunla vurulmuş!" },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Şöminedeki yanık mektup 3 ay önce New York'ta yazıldı! O eski bir öfke mektubudur, cinayet kanıtı değil!" }
-            ],
-            sins: "Kadehe kusturucu döktünüz ama kadeh devrildi ve kurban içmedi. Şöminedeki tehdit mektubu 3 ay öncesine aittir.",
-            goals: ["Kadehe döktüğünüz ilacın cinayetle ilgisi olmadığını kanıtlamak.", "Gerçek katili bulup mirastan payınızı korumak."]
-        },
-        "t8r5w": {
-            name: "Tommy Rossi",
-            title: "Yükselen Başrol Jön",
-            bio: "Stüdyonun genç ve karizmatik yıldızısınız. Ancak geçmişinizde kimsenin bilmemesi gereken büyük bir mafya sırrı gizli.",
-            facts: [
-                "Kessler'ın İtalya'dan keşfettiğini söylediği yeni gözdesiniz.",
-                "Son derece şık giyinir, kadınlara karşı centilmen davranırsınız.",
-                "Akşam yemeğinden sonra yeni filminizin montaj kopyasını projeksiyon odasında izleyeceğinizi herkese duyurmuştunuz."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Saat 22:10'dan silah sesine kadar alt kattaki projeksiyon odasındaydım. Yeni filmimin montaj kopyasını tek başıma izliyordum." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Akşam kütüphane koridorundan geçerken Dr. Hale'in elinde çantayla telaş içinde garaja doğru koşturduğunu gördüm. Birini arıyorsanız revir kayıtları yüzünden Kessler ile arası bozulan doktora bakın!" },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Gerçek adım Tommaso Rinaldi. Brooklyn mafyasından kaçıp sahte pasaportla Hollywood'a sığındım. A.J. beni polise satacaktı. 22:25'te bavulla garajdan kaçmaya çalışıyordum. Dublör Nina beni gördü!" },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Merdivendeki deri kılıf benim, evet! Ama o kılıf .45 kalibre askeri kılıf! Kessler'ı öldüren mermi ise .38 kalibre! Silahım arabamdaydı!" }
-            ],
-            sins: "Gerçek kimliğiniz mafya kaçağı Tommaso Rinaldi. Merdivendeki kılıf sizin ama silahınız .45 kalibre; cinayet ise .38 kalibreyle işlendi.",
-            goals: ["Sahte kimliğinizin ortaya çıkıp tutuklanmanızı engellemek.", "Margaret Kessler ile olan gizli ilişkinizi gizleyip onun üzerindeki şüpheleri dağıtmak (+2 Puan)."]
-        },
-        "h4n6j": {
-            name: "Dr. Arthur Hale",
-            title: "Stüdyo Başhekimi",
-            bio: "Titan Pictures'ın 20 yıllık emektar doktorusunuz. Yıldızların ve stüdyo yöneticilerinin tüm özel sırlarını bilirsiniz.",
-            facts: [
-                "Stüdyodaki tüm sağlık ve kaza raporlarını siz tutarsınız.",
-                "Kessler ile uzun yıllara dayanan bir iş ortaklığınız vardır.",
-                "Akşam yemeğinden sonra salonda konuklarla ilgilenip nane likörü ikram ettiğinizi herkes gördü."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Akşam 22:15 ile 22:30 arasında salonda hanımefendilere nane likörü ikram ediyordum. Silah sesini duyur duymaz kütüphaneye koştum ve A.J.'in nabzını kontrol ettim." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Saat 21:50 sularında Vivian'ın çalışma odasından telaşla çıktığını gördüm; elinde küçük bir şişe vardı ve oldukça hırçındı." },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "İtiraf ediyorum: Salonda değildim. A.J., oyunculara sağladığım reçetesiz morfin kayıtlarını Kara Defter'e yazmıştı. O defteri geri almak için akşam 21:15'te odaya girmiştim; kasayı açamayınca çıkmıştım. 22:10'da ise garaja kaçıp yangın tüpünü devirdim!" },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Morfin ampulünün tamamı kırıldığı yerde halıya dökülmüştür; maktulün vücudunda iğne izi yoktur. Ölüm sebebi göğse giren kurşundur!" }
-            ],
-            sins: "Reçetesiz morfin defterini çalmaya çalıştınız; ampulü düşürdünüz ve sıvısı halıya aktı. Zehirleme yapmadınız.",
-            goals: ["Reyes Montoya'nın sizi 22:20'de garajda gördüğünü masada doğrulatarak alibinizi garantiye almak (+2 Puan).", "Tıbbi diplomanızı iptal ettirecek reçete skandalını örtbas etmek."]
-        },
-        "m2y8c": {
-            name: "Margaret Kessler",
-            title: "Genç Eş / Dul",
-            bio: "Kessler ile 2 yıl önce evlenen genç eşsiniz. Evlilik sözleşmesindeki ağır maddeler yüzünden köşeye sıkışmış durumdasınız.",
-            facts: [
-                "Eski bir koro şarkıcısısınız; Kessler ölürse servetin büyük kısmının varisisiniz.",
-                "Akşam yemeğinden sonra mutfak kilerine inip hizmetçilerle ilgileneceğinizi konuklara söylemiştiniz.",
-                "Dantelli tül yelpazeniz ve pırlantalarınızla dikkat çekersiniz."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Kocamın o korkunç duyurusundan sonra mutfak kilerine indim. 22:15 ile 22:30 arasında erzakı düzenliyordum. Silah patladığında servis asansörünün yanındaydım." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Bana şüpheyle bakacağınıza kocamı bu akşam salonda herkesin önünde tehdit eden eski eş Vivian'a bakın! Yıllardır kocamın peşini bırakmadı, bu akşam da kütüphaneye gidip kavga çıkardı!" },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Mutfakta değildim; kış bahçesinde Tommy Rossi ile buluşmuştum. Yasak ilişkimiz öğrenilirse beni sokağa atardı. Kadehe uyku tozu atmıştım ama kadeh devrildi, tek damla bile içmedi!" },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Devrilen kadehte dudak izi yok, kocam konyağı içmedi. Kocam kurşunla öldürüldü. Ben katil değilim!" }
-            ],
-            sins: "Tommy Rossi ile gizli aşk yaşıyorsunuz. Saat 21:50'de kadehe uyku tozu attınız ama kadeh devrildi; maktul ilacı içmedi.",
-            goals: ["Vivian Vance'in tehditlerini öne sürerek şüpheleri eski eşe çekmek (+3 Puan).", "Tommy Rossi ile olan ilişkinizi gizli tutarak mirası korumak."]
-        },
-        "f9b4z": {
-            name: "Walt Finch",
-            title: "Stüdyo Hukuk Müşaviri & Kurucu Ortak",
-            bio: "Titan Pictures'ın kurucu ortağı ve baş hukukçususunuz. Soğukkanlı, kuralları bilen ve stüdyonun gizli fonlarını yöneten akılsınız.",
-            facts: [
-                "Stüdyonun tüm sözleşmelerini ve finansal davalarını siz yönetirsiniz.",
-                "Kessler ile 25 yıllık kurucu ortaklık bağınız vardır.",
-                "Akşam boyunca barda barmen Frankie ile sohbet ettiğinizi ve salonda konuklarla ilgilendiğinizi herkes gördü."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "A.J. ile bu stüdyoyu sıfırdan kurduk. Saat 22:30 sularında salondaki barda Frankie'ye saati sormuştum; kadehime vermut koyuyordu. İçkimi alıp salona geçtim, bir süre sonra silah sesi geldi." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Tommy'nin sahte kimlikle stüdyoya sığındığını biliyorduk. Bir de 22:10 kesintisinde Dr. Hale'in salondan telaşla çıktığını gördüm." },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "A.J. ile bütçe yüzünden tartıştığımız doğru; ama bir hukukçu kan dökmez, yasalarla hesaplaşır. Barmen Frankie şahidimdir; barda içkimi yudumluyordum!" },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Masadaki kanıtlar Hollywood skandallarını gösteriyor. Tommy kaçıyordu, Hale morfin çalıyordu, Margaret ilaç atıyordu. O kol düğmesi vestiyerde ceketimi asarken koptu, bana komplo kuruluyor!" }
-            ],
-            sins: "Katil sizsiniz! İsviçre'ye aktardığınız 250.000$ ortaya çıkacaktı. 22:15'te barda Frankie'ye saati sordunuz (bar saati 15 dk ileriydi, Frankie 22:30 dedi). Sonra servis merdiveninden çıktınız ve gerçek 22:30'da tetiği çektiniz. Kol düğmenizi masanın dibine düşürdünüz.",
-            goals: ["Frankie'nin barda saati teyit ettiği anı (22:30 sanılmasını) savunma olarak kullanmak.", "Oylamada çoğunluğun sizin dışınızda birini suçlamasını sağlamak."]
-        },
-        "b6l1x": {
-            name: "Frankie Malone",
-            title: "Baş Barmen & Servis Şefi",
-            bio: "Sunset Malikanesi'nin emektar barmenisiniz. Kimin ne içtiğini ve saat kaçta nerede oturduğunu en iyi siz bilirsiniz.",
-            facts: [
-                "Bütün gece salondaki bar tezgahını yönettiniz.",
-                "Kessler'ın içki siparişlerini ve tepsi düzenini yakından takip edersiniz."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Saat 22:30 sularında Bay Walt Finch barda bana saati sormuştu; kadehine vermut dolduruyordum. İçkisini alıp ayrıldıktan kısa bir süre sonra yukarı kütüphaneden silah sesi geldi." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Akşam 21:50'de Bayan Vivian kütüphaneden çıkarken yüzü kireç gibiydi." },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Faturaya 500$ fazla yazmıştım ama aramızda kalmalı. Bay Finch bana saati sorduğunda arkamdaki duvara bakıp 22:30 demiştim." },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Ben dedektif değilim baylar; bende saat ne yazıyorsa onu söylerim. Bay Finch bana saati sordu, söyledim ve gitti. Gerisini polise anlatın!" }
-            ],
-            sins: "İçki faturasında 500$ usulsüzlük yaptınız. Saatin ileri olduğunu unutup Finch'e yanlış saat söylediniz.",
-            goals: ["Bay Finch'e saati söylediğiniz anı dedektife doğru aktarmak (+2 Puan).", "500$'lık fatura açığını kimseye fark ettirmemek."]
-        },
-        "e3c7v": {
-            name: "Ellie Cole",
-            title: "Kessler’ın Özel Sekreteri",
-            bio: "Kessler’ın 6 yıllık sağ kolusunuz. Stüdyo arşivini, sözleşmeleri ve genel evrakları siz yönetirsiniz.",
-            facts: [
-                "Stüdyonun genel evrak ve arşiv düzenini en iyi siz bilirsiniz.",
-                "Kessler'ın randevu defterini siz tutarsınız."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Elektrikler kesilince daktiloyu bırakıp salondaki konukların yanına çıktım; elektrik gelince tekrar yazıhaneye indim. Silah sesi tam 22:30'da yankılandığında masamdaydım." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Akşam Muhasebeci Gus Green'e dikkat edin; kütüphane altındaki ofiste telaşla bazı faturaları yırttığını gördüm. Defter açılacak diye panikleyenleri sorgulayın!" },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Kessler vasiyetinde bana %5 pay bırakacaktı. Defterde borç avanslarım yazılıydı; o defter çıksa işim biterdi." },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Kasa gizli bir idari kasadır; kimin açıp kapattığını arşiv kayıtlarından incelemelisiniz!" }
-            ],
-            sins: "Kardeşinizin tedavisi için kasadan aldığınız borç avanslar Kara Defter'de yazılıydı.",
-            goals: ["Kessler'ın vasiyetindeki %5 payınızı korumak için mirasçılarla iyi geçinmek (+2 Puan).", "Defterdeki borç kayıtlarınızın açığa çıkmasını önlemek."]
-        },
-        "j5d9n": {
-            name: "Julian Croft",
-            title: "Auteur Yönetmen",
-            bio: "Titan Pictures'a Oscar kazandıran dahi yönetmensiniz. Kessler ile telif ve sansür kavgalarınız meşhurdur.",
-            facts: [
-                "Hollywood'un en prestijli yönetmenisiniz.",
-                "Kessler ile son projenin telif hakları yüzünden sert kavgalar ettiniz."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Akşam boyunca terasta yangını seyrettim. Silah sesi geldiğinde salona yeni giriyordum." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "A.J. ile sanatımı anlamadığı için tartıştığım doğru. Ama asıl kavgayı kütüphanede Senato Temsilcisi Ostrander Hill ile ediyordu; stüdyoya siyasi sansür getirmeye kalkan o bürokratı sorgulayın!" },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Kessler beni HUAC komitesine ihbar edecekti; solcu bildiriye imza atmıştım. Çöpteki yırtık telgraf dünkü kavgamızdan kalmadır!" },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Bu gece yaşananlar ucuz bir roman senaryosu gibi baylar. Kurbanı öldüren şey sanat değil; kasanın etrafında dönen o kirli stüdyo paralarıdır!" }
-            ],
-            sins: "Solcu bildiriye imza attınız; Kessler bunu biliyordu. Çöpteki telgraf dünkü kavgadan kalmadır.",
-            goals: ["Rakip yapımcı Irving veya Margaret'tan yeni film bütçesi için 50.000$ sözü kapmak (+2 Puan).", "Bildiri imzanızın gizli kalmasını sağlamak."]
-        },
-        "s2w8m": {
-            name: "Sylvia Beach",
-            title: "Magazin Yazarı & Dedikodu Kraliçesi",
-            bio: "Los Angeles Herald'ın en ünlü köşe yazarısınız. Bir cümlenizle yıldızların kariyerini bitirebilirsiniz.",
-            facts: [
-                "Kessler bu gece size büyük bir manşet sözü vermişti.",
-                "Malikanedeki en ufak fısıltıyı anında yakalayan keskin bir gözlem yeteneğiniz vardır."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Kessler bana büyük bir manşet sözü vermişti; silah patladığında kış bahçesi kapısındaydım." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Bayan Margaret mutfakta olduğunu söylüyor ama kış bahçesi civarında genç bir jönle hararetli bir fısıldaşma içindeydi! Servetini kiminle paylaşacak araştırın!" },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Kessler o defteri gazeteme satmam için 10.000$ komisyon istemişti; çantamda avans çeki vardı!" },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Ben cinayet işlemem baylar, cinayetin haberini yazarım! Kessler'ın ölümü bu stüdyonun kasasındaki açıkları kapatmaya yetmeyecek." }
-            ],
-            sins: "Defteri ilk elden satın almak için Kessler'a rüşvet çeki getirdiniz.",
-            goals: ["10.000$'lık avans rüşvet çekini çantanızda gizleyip rüşvet şüphesinden sıyrılmak (+2 Puan).", "Masadaki en az 3 sırrı öğrenip manşet çıkarmak."]
-        },
-        "r4p6k": {
-            name: "Reyes Montoya",
-            title: "Baş Görüntü Yönetmeni",
-            bio: "Stüdyonun ışık ve kamera ustasısınız. Az konuşur, teknik ayrıntıları anında yakalarsınız.",
-            facts: [
-                "Kamera ve aydınlatma ekiplerinin başındasınız.",
-                "Akşam yemeğinden sonra garaj tarafında bulunduğunuzu belirttiniz."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Elektrikler kesilince jeneratör dairesine destek için garaja indim. Silah patladığında avludaydım." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Elektrikler kesildiğinde garaj tarafına doğru koşan gölgeler gördüm; avluda biri yangın tüpünü devirdi. İçerideki kargaşayı fırsat bilip kaçmaya çalışanlar vardı!" },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Kessler beni İspanya yardımlarım yüzünden sınırdışı ettirmekle tehdit ediyordu; ama suçlu ben değilim." },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Dr. Hale'in ellerinde barut lekesi yoktu, o saatte garajdaydı. Katili dışarıda değil, köşkün içindeki odaları kullananların arasında arayın!" }
-            ],
-            sins: "İspanya iç savaşına para yardımı yaptınız; Kessler bunu biliyordu.",
-            goals: ["Kessler'ın defterindeki İspanya yardım makbuzları sayfasını yok etmek (+3 Puan).", "Dr. Hale'in garajdaki alibisini doğrulamak (+2 Puan)."]
-        },
-        "c7t3y": {
-            name: "Henry Cobb",
-            title: "Ses Mühendisi & Teknisyen",
-            bio: "Stüdyonun ses kayıt teknisyenisiniz. Malikanedeki mikrofonları ve radyoyu siz kurdunuz.",
-            facts: [
-                "Akustik ve ses sistemleri uzmanısınız.",
-                "Akşam boyunca salondaki ses düzenini siz kontrol ettiniz."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Salondaki ses düzenini ayarlıyordum; silah sesi geldiğinde radyo tam 22:30 haber çanını çalıyordu." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Kütüphane ile salon arasındaki dahili interkom hattını akşam ben kontrol etmiştim. Hat açıktı, içeriden gelen gürültüleri duyabiliyorduk." },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Kessler beni bazı ses tesisatlarını kurmaya zorladı! İşimi kaybetmekten korkuyordum ama katil değilim." },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Akustik yalan söylemez baylar! Silahın patladığı frekans ile radyonun 22:30 çan vuruşu mikrofona aynı anda vurdu. Gerçek saat tam 22:30'du!" }
-            ],
-            sins: "Kessler'ın emriyle malikanede yasa dışı ses dinleme hatları kurdunuz.",
-            goals: ["Yasa dışı dinleme suçlamasından sıyrılmak (+3 Puan).", "Radyo çanı ile silah sesinin eşzamanlı olduğunu aktarmak (+2 Puan)."]
-        },
-        "b9q2x": {
-            name: "Clara Bowles",
-            title: "Baş Kostüm Tasarımcısı",
-            bio: "Stüdyonun gardırop şefisiniz. Dikişten ve kumaştan kimin ne taşıdığını anında anlarsınız.",
-            facts: [
-                "Tüm oyuncuların ve yöneticilerin kıyafetlerini siz diktiniz.",
-                "Cinayet anında mutfak koridorundaydınız."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Mutfak koridorunda kürkleri kontrol ediyordum. Silah sesi servis kapısının önündeyken geldi." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Saat 22:20 sularında ahşap servis merdiveni gıcırdadı; yukarı hızla çıkan biri vardı." },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Stüdyodan ipek kumaş aşırmıştım. Merdivenden çıkan kişinin sırtındaki koyu renk kruvaze ceketi gördüm!" },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Servis merdiveninden inen o adamın sırtındaki kruvaze ceketin kesimini ve dikişini inceledim; stüdyonun en pahalı kumaşından, sadece özel yönetim kurulundakilere dikilmiş bir modeldir!" }
-            ],
-            sins: "Stüdyo deposundaki pahalı Fransız ipeklerini karaborsada sattınız.",
-            goals: ["Ceket kumaşının yönetim kuruluna ait olduğunu vurgulamak (+3 Puan).", "İpek hırsızlığınızı gizli tutmak."]
-        },
-        "n1m5v": {
-            name: "Nina De La Rosa",
-            title: "Baş Dublör & Kaskadör",
-            bio: "Hollywood'un en cesur kadın dublörüsünüz. Gözünüz karadır, hiçbir şeyden korkmazsınız.",
-            facts: [
-                "Aksiyon sahnelerinde erkek dublörlere taş çıkartırsınız.",
-                "Yangın başlayınca garajdaki motorunuza koştunuz."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Motorumu korumak için dışarı çıktım. Silah patladığında garaj avlusundaydım." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Saat 22:25'te garaj kapısında Tommy'yi bavulla kaçarken gördüm!" },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Kaza sigortamı Kessler cebine indirmişti; Tommy'nin bavulundaki paradan pay istedim ama silahı yoktu." },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Tommy o sırada garajda arabasını çalıştırıyordu, yani cinayet anında kütüphaneden uzaktaydı! İçerideki merdivenden inen adamı bilmem ama Tommy'nin katil olmadığını biliyorum!" }
-            ],
-            sins: "Tommy'den sus payı olarak para koparmaya çalıştınız.",
-            goals: ["Stüdyo yönetimi veya yapımcı Irving'den 15.000$ kaza tazminatı koparmak (+2 Puan).", "Tommy'nin dışarıdaki alibisini doğrulamak."]
-        },
-        "i6z8p": {
-            name: "Irving Thalberg Jr.",
-            title: "Rakip Stüdyo Temsilcisi",
-            bio: "Apex Pictures'ın veliahtısınız. Titan Pictures'ı ucuza kapatmak isteyen bir finans kurdusunuz.",
-            facts: [
-                "Sektörün en zengin yapımcı ailelerinden birisiniz.",
-                "Yemek odasında hisse pazarlığı yapıyordunuz."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "22:15 ile 22:30 arasında yemek odasındaydım. Silah sesiyle donakaldık." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Titan Pictures son 6 aydır gizlice soyuluyordu; 250.000$'lık açığı piyasada herkes fısıldıyordu." },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Hisseleri ucuza kapatmak için geldim; Margaret ve Vivian'ın hisseleri için çek hazırlamıştım ama öldürmedim!" },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Bana cinayetten bahsetmeyin baylar; Titan Pictures'ın batık defterlerinde dönen milyonların kokusunu alıyorum. Bu stüdyonun iflası an meselesidir!" }
-            ],
-            sins: "Stüdyonun iflasından faydalanıp hisseleri ucuza kapatmaya geldiniz.",
-            goals: ["Margaret ve Vivian ile gizli hisse satın alma pazarlığı yapmak (+3 Puan).", "Stüdyonun mali açığı hakkındaki dedikoduları yaymak."]
-        },
-        "p3k7w": {
-            name: "Pete Moretti",
-            title: "Kulüp İşletmecisi & Tefeci",
-            bio: "Sunset Strip'in yeraltı kulüplerini yöneten karanlık patronusunuz. Alacağınızı asla bırakmazsınız.",
-            facts: [
-                "Ünlü kumarhanelerin sahibisiniz.",
-                "Kessler ile karanlık finansman bağlarınız vardır."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Salonda puro içiyordum; patlama sesi geldiğinde barmenin yanındaki masadaydım." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Evet, alacağımı istemek için kütüphane tarafına yanaştım. Camı tıklatıp senetleri gösterdim ama kapı kilitliydi, içeri adım bile atamadım!" },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Tommy Rossi bana 10.000$ borçluydu! Borcumu tahsil etmeye geldim; borçlu adamı öldürürsem paramı alamam!" },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Benim kolumda Moretti arması var; masadaki kol düğmesi stüdyonun kravatlı katiline ait!" }
-            ],
-            sins: "Balkona tırmanıp camı tıklattınız ama kapı kilitliydi; içeri giremediniz.",
-            goals: ["Balkon kapısının içeriden sürgülü olduğunu kanıtlamak (+2 Puan).", "Tommy'den borcunu tahsil etmek."]
-        },
-        "j8v4c": {
-            name: "Josie Packard",
-            title: "Gazino Şarkıcısı",
-            bio: "Moretti'nin kulübünde sahne alan, Titan Pictures'ın yeni müzikalinde başrol arayan bir vokalistsiniz.",
-            facts: [
-                "Müzik kulağınız mükemmeldir.",
-                "Akşam boyunca salonda piyanoyu çaldınız."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Piyano başındaydım; silah sesini kütüphaneden geldiğinde duydum." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Salonda piyano çalarken herkes kutlamanın şokunu yaşıyordu. Piyanodan barda oturanları ve salonu net görebiliyordum; herkes gergindi." },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Kessler ile geçen kış ilişkim olmuştu; fotoğraflar defterdeydi. Finch'ten onları çalmasını istedim ama reddetti!" },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Benim tek derdim kasadaki o skandal fotoğraflarımdı; ama görünüşe göre o kasada benden çok daha büyük zimmet sırları saklıymış!" }
-            ],
-            sins: "Kessler ile gizli otel fotoğraflarınız vardı; defteri ele geçirmek istediniz.",
-            goals: ["Yeni müzikal film için Julian'dan başrol sözü almak (+2 Puan).", "Fotoğraflarınızı korumak."]
-        },
-        "g2x9n": {
-            name: "Gus Green",
-            title: "Stüdyo Baş Muhasebecisi",
-            bio: "Titan Pictures'ın 15 yıldır defterlerini tutan, her kuruşun hesabını bilen korkak bir memursunuz.",
-            facts: [
-                "Tüm faturalar sizin onayınızdan geçer.",
-                "Kütüphanenin altındaki muhasebe odasındaydınız."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Muhasebe odasında faturaları düzenliyordum; silah sesi tam tavanımdan geldi." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Saat 22:20'de koridordan hızlı ayak sesleri geçti; ardından tavandan boğuşma sesleri duyuldu." },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "A.J. defterleri denetçilere açacağını söyleyince dünyam karardı! Stüdyonun geçmiş döneme ait bütçe açıklarında benim de imzam var; o denetçiler gelirse ilk tutuklanacak kişi ben olurum!" },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Bana zimmetten ya da suç ortaklığından bahsedip durmayın! Bu şirketin paralarını kimin batırdığını arıyorsanız kasanın başındaki adamlara bakın!" }
-            ],
-            sins: "Finch'in baskısıyla sahte yapım masrafı fişlerini imzaladınız.",
-            goals: ["Sahte fatura koçanlarını ele geçirip şöminede yok etmek (+3 Puan).", "Mali açıklar konusundaki şüpheleri üzerinizden atmak."]
-        },
-        "r5y3m": {
-            name: "Ruth Snyder",
-            title: "Magazin Stajyeri",
-            bio: "Sylvia Beach'in yanında çalışan, hırslı ve gözü açık genç bir fotoğrafçısınız.",
-            facts: [
-                "Boynunuzda her an çekime hazır bir makine taşırsınız.",
-                "Misafirlerin arkasından hiç ayrılmadınız."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Palto odasındaydım; panikle elimdeki makineyi yere düşürdüm." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Akşam boyunca patronum Sylvia'nın peşinde koridorları turladım; herkesin kiminle fısıldaştığını not alıyordum." },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Sylvia'nın çantasından notları aşırdım; kendi manşetimi patlatmak istiyordum!" },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Benim işim karanlıkta gizli kareler yakalamaktır baylar! Bu malikanede kural tanımaz biri varsa, bunu en iyi lensim kaydetmiştir!" }
-            ],
-            sins: "Patronunuz Sylvia'nın çantasından gizlice şantaj notlarını çaldınız.",
-            goals: ["Çaldığınız şantaj notlarını kendi haber dosyanızda toplamak (+2 Puan).", "Gizli fotoğraflarla gerçeği ortaya çıkarmak."]
-        },
-        "o7h1k": {
-            name: "Ostrander Hill",
-            title: "Senato Komite Temsilcisi",
-            bio: "Washington HUAC komitesi adına Hollywood'u denetleyen resmi müfettişsiniz.",
-            facts: [
-                "Federal yetkileriniz vardır.",
-                "Kessler'dan sabah teslim alacağınız listeyi bekliyordunuz."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Salonda bekliyordum; Kessler sabah bana komünist listesini teslim edecekti." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Duyurudan sonra Rossi ve Croft'un kaçış hareketleri federal şüphe alanına girdi." },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Kessler ile akşam yemekten önce gizli bir görüşme yaptım; stüdyodaki şüpheli isimlerin listesini sabah alacaktım." },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Federal yasalar adına talep ediyorum: Bu malikanede kaybolan o 'Kara Defter' ve stüdyonun kayıp fonları derhal devlet denetmenlerine teslim edilmelidir!" }
-            ],
-            sins: "Kessler ile gizli görüşme yapıp bazı isimleri listeden çıkarma pazarlığına oturdunuz.",
-            goals: ["Kara Defter'i ele geçirip resmi kayda geçirmek (+3 Puan).", "Federal otoritenizi kullanarak diğer şüphelileri baskı altında tutmak."]
-        },
-        "c4v8z": {
-            name: "Clarence Vance",
-            title: "Vivian’ın Menajeri & Kardeşi",
-            bio: "Vivian Vance’in hem öz kardeşi hem menajerisiniz. Ablanızı korumak için her kavgaya girersiniz.",
-            facts: [
-                "Ablanızın yanından hiç ayrılmazsınız.",
-                "Stüdyonun fesih kararına çok öfkelisiniz."
-            ],
-            rounds: [
-                { num: 1, title: "TUR 1: GALA BAŞLIYOR", text: "Ablamla terastaydık; silah sesiyle terasa açılan kapıya koştuk." },
-                { num: 2, title: "TUR 2: ŞÜPHELER", text: "Ablamın şömineye attığı mektup aylar öncesine aitti; Kessler kasayı açarken salondaydı!" },
-                { num: 3, title: "TUR 3: ALİBİLER ÇÖKÜYOR", text: "Ablamın sözleşmesini çalmak için servis merdivenine yanaşmıştım; ama kapıdan birinin hızla indiğini görünce korkup terasa kaçtım." },
-                { num: 4, title: "TUR 4: YÜZLEŞME", text: "Ablam o sırada terastaydı; merdivenden inen o adamı ben kendi gözlerimle gördüm. Ablama bu suçu atmaya çalışanlar, o servis yolunu kimin kullandığını çok iyi biliyor!" }
-            ],
-            sins: "Kasadan ablanızın sözleşmesini çalmaya çalıştınız ama biri inince kaçtınız.",
-            goals: ["Merdivenden inen şüpheliyi teşhis ederek ablanızı aklamak (+3 Puan).", "Vivian'ın fesih sözleşmesini yok etmek."]
-        }
-    };
-
-    function getQueryParam(param) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(param);
-    }
-
-    const token = getQueryParam('token');
-
-    if (token && characters[token]) {
-        const char = characters[token];
-        document.getElementById('char-name').innerText = char.name;
-        document.getElementById('char-title').innerText = char.title;
-        document.getElementById('char-bio').innerText = char.bio;
-        
-        const factsUl = document.getElementById('char-facts');
-        factsUl.innerHTML = '';
-        char.facts.forEach(fact => {
-            const li = document.createElement('li');
-            li.innerHTML = fact;
-            factsUl.appendChild(li);
-        });
-
-        // Turları Kademeli Render Et
-        const roundsContainer = document.getElementById('rounds-container');
-        roundsContainer.innerHTML = '';
-        char.rounds.forEach(round => {
-            const roundDiv = document.createElement('div');
-            roundDiv.id = `round-card-${round.num}`;
-            roundDiv.className = 'round-card';
-            roundDiv.innerHTML = `
-                <div class="round-title">${round.title}</div>
-                <p>${round.text}</p>
-            `;
-            roundsContainer.appendChild(roundDiv);
-        });
-
-        // Başlangıçta sadece 1. Turu Aç
-        showRound(1);
-
-        document.getElementById('char-sins').innerText = char.sins;
-        const goalsUl = document.getElementById('char-goals');
-        goalsUl.innerHTML = '';
-        char.goals.forEach(goal => {
-            const li = document.createElement('li');
-            li.innerHTML = goal;
-            goalsUl.appendChild(li);
-        });
-
-    } else {
-        document.getElementById('player-screen').style.display = 'none';
-        document.getElementById('error-screen').style.display = 'block';
-    }
-
-    function switchTab(tabId) {
-        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-
-        document.getElementById(tabId).classList.add('active');
-        const index = ['tab-bio', 'tab-rounds', 'tab-secrets'].indexOf(tabId);
-        if (index !== -1) {
-            document.querySelectorAll('.tab-btn')[index].classList.add('active');
-        }
-    }
-
-    // Kademeli Tur Değiştirici Fonksiyon
-    function showRound(roundNum) {
-        document.querySelectorAll('.round-card').forEach(c => c.classList.remove('active'));
-        document.querySelectorAll('.round-nav-btn').forEach(b => b.classList.remove('active'));
-        
-        const targetCard = document.getElementById(`round-card-${roundNum}`);
-        if (targetCard) targetCard.classList.add('active');
-        
-        const targetBtn = document.getElementById(`btn-round-${roundNum}`);
-        if (targetBtn) targetBtn.classList.add('active');
-    }
-
-    function revealSecrets() {
-        if (confirm("Bu bilgileri sadece siz görmelisiniz. Devam etmek istiyor musunuz?")) {
-            document.getElementById('spoiler-overlay').style.display = 'none';
-            document.getElementById('secret-content').classList.add('revealed');
-        }
-    }
+"use strict";
+const roundsLabels=["Birinci Tur · İlk İfadeler","İkinci Tur · Sorgulama","Üçüncü Tur · İtiraflar","Dördüncü Tur · Son Savunmalar"];
+const $ = id => document.getElementById(id);
+let myRole=null;
+let currentRound=1;
+let maxOpenedRound=1;
+function b64bytes(s){return Uint8Array.from(atob(s),c=>c.charCodeAt(0));}
+function hex(bytes){return Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');}
+async function loadMyRole(){
+  const token=new URLSearchParams(location.search).get('token');
+  if(!token || !/^[a-z0-9]{5}$/.test(token)) throw new Error('invalid link');
+  const encoder=new TextEncoder();
+  const hash=await crypto.subtle.digest('SHA-256',encoder.encode('kanyon-role-v16:'+token));
+  const file=hex(new Uint8Array(hash)).slice(0,28);
+  const response=await fetch('./roles/'+file+'.json',{cache:'no-store'});
+  if(!response.ok) throw new Error('role missing');
+  const blob=await response.json();
+  const keyRoot=await crypto.subtle.importKey('raw',encoder.encode(token),'PBKDF2',false,['deriveKey']);
+  const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:b64bytes(blob.salt),iterations:blob.iterations,hash:'SHA-256'},keyRoot,{name:'AES-GCM',length:256},false,['decrypt']);
+  const plaintext=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64bytes(blob.iv)},key,b64bytes(blob.cipher));
+  const content=JSON.parse(new TextDecoder().decode(plaintext));
+  if(!content || !Array.isArray(content.rounds) || content.rounds.length!==4 || !Array.isArray(content.goals)||content.goals.length!==2)throw new Error('invalid content');
+  return content;
+}
+function showTab(name){
+  document.querySelectorAll('.page').forEach(p=>p.hidden=p.id!==name);
+  document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===name)));
+}
+function showRound(n){
+  currentRound=n;
+  $('roundTitle').textContent=roundsLabels[n-1];
+  $('roundText').textContent=myRole.rounds[n-1];
+  [...$('roundButtons').children].forEach((b,i)=>{
+    b.classList.toggle('active',i+1===n);
+    b.disabled=i+1>maxOpenedRound;
+    b.setAttribute('aria-pressed',String(i+1===n));
+  });
+  $('nextRound').hidden=n>=4;
+  $('nextRound').textContent=(n+1)+'. tura geç';
+}
+function renderRole(c){
+  $('roleNumber').textContent='KARAKTER '+c.number+' / 21';
+  $('roleName').textContent=c.name;
+  $('roleTitle').textContent=c.title;
+  $('about').textContent=c.about;
+  $('style').textContent=c.style;
+  $('secretText').textContent=c.secret;
+  for(const g of c.goals){
+    const outer=document.createElement('div');outer.className='goal';
+    const points=document.createElement('span');points.className='points';points.textContent=g.score+' · ';
+    outer.append(points,document.createTextNode(g.text));$('goalList').append(outer);
+  }
+  for(let n=1;n<=4;n++){
+    const b=document.createElement('button');b.type='button';b.className='roundBtn';b.textContent='Tur '+n;
+    b.addEventListener('click',()=>showRound(n));$('roundButtons').append(b);
+  }
+  showRound(1);
+  document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+  $('nextRound').addEventListener('click',()=>{
+    if(!confirm('Masadaki oyun yöneticisi '+(currentRound+1)+'. turu başlattı mı? Erken açarsanız oyunun sürprizlerini görebilirsiniz.'))return;
+    maxOpenedRound=Math.max(maxOpenedRound,currentRound+1);
+    showRound(currentRound+1);
+  });
+  $('reveal').addEventListener('click',()=>{
+    if(!confirm('Bu bilgileri yalnızca bu rolü oynayan kişi görmeli. Bu karakter sizin rolünüz mü?')) return;
+    $('curtain').hidden=true;$('secretPane').hidden=false;
+  });
+  $('hideSecret').addEventListener('click',()=>{ $('secretPane').hidden=true;$('curtain').hidden=false; });
+  $('app').hidden=false;
+}
+(async()=>{
+  try{myRole=await loadMyRole(); renderRole(myRole);}
+  catch(e){$('error').hidden=false; /* Never log character contents or URL tokens */ }
+  finally{$('loading').hidden=true;}
+})();
 </script>
 </body>
 </html>
