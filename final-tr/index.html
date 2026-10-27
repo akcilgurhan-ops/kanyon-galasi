@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="tr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#121417"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow,noarchive"><title>Kanyon Malikânesi · Güvenli Tur Testi v1.7.2</title>
+<style>
+:root{color-scheme:dark;--base:#121416;--surface:#202125;--gold:#d6b574;--text:#f5eddd;--muted:#c5b8a0;--border:#766343;--warn:#cc8880}
+*{box-sizing:border-box}body{margin:0;background:var(--base);color:var(--text);font:16px/1.55 Georgia,'Times New Roman',serif;padding:18px 10px 50px}
+main{max-width:680px;margin:auto;background:var(--surface);border:1px solid var(--gold);border-radius:12px;padding:clamp(16px,4vw,30px)}
+header{text-align:center;border-bottom:1px solid var(--border);padding-bottom:18px}header .over{font:600 .7rem system-ui,sans-serif;letter-spacing:.16em;color:var(--muted)}
+h1{font-size:clamp(1.75rem,5vw,2.25rem);margin:8px 0 2px;color:var(--gold)}header p{color:var(--muted);margin:2px 0}
+h2{font-size:1.5rem;margin:6px 0;color:#fff}h3{font-size:1.13rem;color:var(--gold);margin:17px 0 6px}
+p{margin:8px 0 13px;overflow-wrap:anywhere}button{font:inherit;cursor:pointer}button:disabled{cursor:not-allowed;opacity:.55}
+.role{border:1px solid var(--border);background:#171819;text-align:center;margin:20px 0;padding:16px}.role small{font:600 .79rem system-ui;color:var(--gold)}.role p{color:var(--gold);margin:0}
+.tabs{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:6px;margin-bottom:18px}.tabs button{background:#141516;border:1px solid var(--border);border-radius:5px;min-height:45px;padding:7px 4px;color:var(--muted)}.tabs button.sel,.roundTabs button.sel{background:var(--gold);color:#1a160d;font-weight:700}
+.section[hidden], [hidden]{display:none!important}.note{font: .88rem/1.5 system-ui,sans-serif;color:var(--muted)}
+.roundTabs{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.roundTabs button{min-height:46px;background:#161718;color:var(--gold);border:1px solid var(--border);border-radius:5px}
+.entry{background:#151719;border:1px solid var(--border);border-radius:6px;padding:15px;margin:15px 0}.entry label{display:block;font-weight:700;margin-bottom:8px}.entry input{font:600 1.05rem system-ui,sans-serif;letter-spacing:.08em;width:100%;padding:12px 10px;border-radius:5px;border:1px solid var(--gold);background:#111316;color:var(--text)}
+.primary{display:block;background:var(--gold);color:#1a160d;border:0;border-radius:5px;padding:12px;width:100%;margin-top:10px;font-weight:700}.secondary{display:block;background:transparent;color:var(--gold);border:1px solid var(--gold);border-radius:5px;padding:11px;width:100%;margin-top:14px}
+.speech{padding:17px;border-left:4px solid var(--gold);background:#151618;font-size:1.05rem;line-height:1.72}.private{border:1px dashed var(--warn);border-radius:6px;background:#251d1c;padding:18px}.private h3{color:#ecaaa4}.goal{padding:9px 10px;margin:9px 0;border-left:3px solid var(--warn);background:#352522}.goal b{color:#f5b1a9}
+.msg{padding:12px;margin-top:10px;color:#f3c1bc;background:#302222;border-radius:5px;font:.9rem/1.4 system-ui,sans-serif}
+footer{margin-top:25px;padding-top:14px;border-top:1px solid var(--border);text-align:center;font:.76rem/1.5 system-ui,sans-serif;color:var(--muted)}
+:focus-visible{outline:3px solid #f5dc9e;outline-offset:2px}
+@media(max-width:370px){body{padding:8px 4px}.tabs button{font-size:.8rem}.roundTabs button{font-size:.85rem}}
+</style></head>
+<body><main>
+<header><div class="over">1949 · HOLLYWOOD · GİZLİ GALA</div><h1>Kanyon Malikânesi</h1><p>Oyuncuya özel karakter dosyası</p></header>
+<p id="status" class="note" role="status">Şifreli karakter dosyası kontrol ediliyor…</p>
+<div id="error" class="msg" role="alert" hidden>Dosya açılamadı. Lütfen v2.0 rol QR kodunu tekrar okutun. İnternet bağlantınızı kontrol edin.</div>
+<div id="app" hidden>
+<div class="role"><small id="num"></small><h2 id="name"></h2><p id="title"></p></div>
+<nav class="tabs" aria-label="Karakter bölümleri">
+<button class="sel" data-part="identity" aria-selected="true">Kimlik</button><button data-part="dialogue" aria-selected="false">Replikler</button><button data-part="private" aria-selected="false">Ajanda ve sırlar</button>
+</nav>
+<section id="identity" class="section"><h3>Sizin hakkınızda</h3><p id="about"></p><h3>Karakteri nasıl oynayın?</h3><p id="style"></p><p class="note">Oyun yöneticisi de oynar. Yalnızca kendi kartınızın QR kodunu kullanın.</p></section>
+<section id="dialogue" class="section" hidden><p class="note">Her tur için masayı yöneten oyuncu o tur başladığında ayrı bir kod verecektir. Gelecek turun içeriği henüz açılmaz.</p>
+<div class="roundTabs" id="roundTabs"></div>
+<div id="unlockPanel" class="entry"><label for="roundCode" id="codeLabel">Tur açma kodu</label><input id="roundCode" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="4 haneli tur kodu" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" aria-describedby="pinHelp"><p class="note" id="pinHelp">Oyun yöneticisinden aldığınız 4 rakamı girin.</p><button id="unlock" class="primary">Bu turun metnini aç</button><div id="codeError" class="msg" hidden role="alert">Kod doğru değil veya bu tur için geçerli değil.</div></div>
+<div id="roundContent" hidden><h3 id="roundTitle"></h3><p id="speech" class="speech"></p><button class="secondary" id="closeRound">Tur metnini gizle</button></div></section>
+<section id="private" class="section" hidden><div class="private" id="privateGate"><h3>Yalnızca rol sahibine özel</h3><p>Bu bölüm sizin gerçek geçmişinizi ve şahsi hedeflerinizi içerir. Ekranı başkalarına göstermeyin.</p><button class="primary" id="showPrivate">Kendi sırlarımı aç</button></div>
+<div class="private" id="privateContent" hidden><h3>Yalnızca sizin bildiğiniz gerçekler</h3><p id="secret"></p><h3>Şahsi hedefler</h3><div id="goals"></div><button class="secondary" id="closePrivate">Sırlarımı gizle</button></div></section>
+</div>
+<footer>Türkçe Final İnceleme v2.0 · Final çözümü bu sitede bulunmaz</footer>
+</main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const enc=new TextEncoder();
+let token=null, payload=null, visibleRound=1;
+const released=new Map();
+let storageKey='';
+let savedPins={};
+// Codes are remembered only on this browser, separated for each character.
+function savePins(){try{localStorage.setItem(storageKey,JSON.stringify(savedPins));}catch(_){/* Browsing still works when storage is unavailable. */}}
+function readPins(){try{const value=JSON.parse(localStorage.getItem(storageKey)||'{}');return value&&typeof value==='object'&&!Array.isArray(value)?value:{};}catch(_){return {};}}
+function b64(x){return Uint8Array.from(atob(x),a=>a.charCodeAt(0));}
+function hex(x){return Array.from(x,b=>b.toString(16).padStart(2,'0')).join('');}
+async function keyFor(password,s,info){
+ const ikm=await crypto.subtle.importKey('raw',enc.encode(password),'HKDF',false,['deriveKey']);
+ return crypto.subtle.deriveKey({name:'HKDF',hash:'SHA-256',salt:b64(s),info:enc.encode(info)},ikm,{name:'AES-GCM',length:256},false,['decrypt']);
+}
+async function openBlock(block,secret,context){
+ const key=await keyFor(secret,block.s,context);
+ const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(block.n)},key,b64(block.c));
+ return JSON.parse(new TextDecoder().decode(plain));
+}
+function part(p){document.querySelectorAll('.section').forEach(x=>x.hidden=x.id!==p);document.querySelectorAll('[data-part]').forEach(b=>{b.classList.toggle('sel',b.dataset.part===p);b.setAttribute('aria-selected',String(b.dataset.part===p));});}
+function codeNorm(s){return s.replace(/[^0-9]/g,'').slice(0,4);}
+function selectRound(n){
+ visibleRound=n;
+ [...$('roundTabs').children].forEach((b,i)=>b.classList.toggle('sel',i===n-1));
+ $('codeLabel').textContent=n+'. tur için oyun yöneticisinin verdiği kod';
+ $('roundCode').value='';$('codeError').hidden=true;
+ showReleased();
+}
+function showReleased(){
+ const opened=released.get(visibleRound);
+ $('unlockPanel').hidden=!!opened;
+ $('roundContent').hidden=!opened;
+ if(opened){
+   $('roundTitle').textContent=visibleRound+'. Tur';
+   $('speech').textContent=opened;
+   $('speech').hidden=false;
+   $('closeRound').textContent='Tur metnini gizle';
+ }else{$('speech').textContent='';}
+}
+async function restoreReleased(){
+ savedPins=readPins();
+ let changed=false;
+ for(let n=1;n<=4;n++){
+   const pin=savedPins[n];
+   if(typeof pin!=='string'||!/^[0-9]{4}$/.test(pin)){if(pin!==undefined){delete savedPins[n];changed=true;}continue;}
+   try{
+     const obj=await openBlock(payload.rounds[n-1],token+'|'+pin,'KM|v1.7|round|'+n);
+     if(obj.round!==n||typeof obj.speech!=='string')throw Error('invalid saved round');
+     released.set(n,obj.speech);
+   }catch(_){delete savedPins[n];changed=true;}
+ }
+ if(changed)savePins();
+}
+async function init(){
+ const params=new URLSearchParams(location.hash.slice(1));token=params.get('key');
+ if(!token||! /^[A-Za-z0-9_-]{43}$/.test(token))throw Error('bad key');
+ const digest=await crypto.subtle.digest('SHA-256',enc.encode('KM17:file:'+token));
+ const filename=hex(new Uint8Array(digest)).slice(0,40);
+ storageKey='KM-v2.0:opened:'+filename;
+ const response=await fetch('./roles/'+filename+'.json',{cache:'no-store'});
+ if(!response.ok)throw Error('missing');
+ payload=await response.json();if(payload.v!==17||payload.rounds.length!==4)throw Error('invalid');
+ const profile=await openBlock(payload.profile,token,'KM|v1.7|profile');
+ $('num').textContent='KARAKTER '+profile.number+' / 21';$('name').textContent=profile.name;$('title').textContent=profile.title;
+ $('about').textContent=profile.about;$('style').textContent=profile.style;
+ for(let n=1;n<=4;n++){
+   const b=document.createElement('button');b.type='button';b.textContent='Tur '+n;b.setAttribute('aria-label',n+'. Tur');b.addEventListener('click',()=>selectRound(n));$('roundTabs').append(b);
+ }
+ $('roundCode').addEventListener('input',()=>{$('roundCode').value=codeNorm($('roundCode').value);$('codeError').hidden=true;});
+ $('roundCode').addEventListener('keydown',e=>{if(e.key==='Enter'){$('unlock').click();}});
+ $('unlock').addEventListener('click',async()=>{
+   const n=visibleRound;const code=codeNorm($('roundCode').value);
+   $('codeError').hidden=true;
+   if(code.length!==4){$('codeError').hidden=false;return;}
+   $('unlock').disabled=true;
+   try{
+      const obj=await openBlock(payload.rounds[n-1],token+'|'+code,'KM|v1.7|round|'+n);
+      if(obj.round!==n||typeof obj.speech!=='string')throw Error('invalid round');
+      released.set(n,obj.speech);savedPins[n]=code;savePins();$('roundCode').value=''; showReleased();
+   }catch(e){$('codeError').hidden=false;}
+   finally{$('unlock').disabled=false;}
+ });
+ $('closeRound').addEventListener('click',()=>{
+   const speech=$('speech');speech.hidden=!speech.hidden;
+   $('closeRound').textContent=speech.hidden?'Tur metnini yeniden göster':'Tur metnini gizle';
+ });
+ $('showPrivate').addEventListener('click',async()=>{
+  $('showPrivate').disabled=true;
+  try{
+    const obj=await openBlock(payload.private,token,'KM|v1.7|private');
+    $('secret').textContent=obj.secret;$('goals').replaceChildren();
+    for(const g of obj.goals){const d=document.createElement('div');d.className='goal';const sc=document.createElement('b');sc.textContent=g.score+' · ';d.append(sc,document.createTextNode(g.text));$('goals').append(d);}
+    $('privateGate').hidden=true;$('privateContent').hidden=false;
+  }catch(e){$('error').hidden=false;}
+  finally{$('showPrivate').disabled=false;}
+ });
+ $('closePrivate').addEventListener('click',()=>{$('privateContent').hidden=true;$('privateGate').hidden=false;$('secret').textContent='';$('goals').replaceChildren();});
+ document.querySelectorAll('[data-part]').forEach(b=>b.addEventListener('click',()=>part(b.dataset.part)));
+ await restoreReleased();
+ selectRound(1);$('app').hidden=false;
+}
+init().catch(()=>{$('error').hidden=false;}).finally(()=>{$('status').hidden=true;});
+</script></body></html>
